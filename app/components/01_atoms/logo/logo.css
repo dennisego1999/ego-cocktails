@@ -1,5 +1,5 @@
 @layer atoms {
-    .logo {
-        color: var(--color-text)
-    }
+  .logo {
+    color: var(--color-text);
+  }
 }

@@ -3,8 +3,8 @@
 ## User story
 
 ```
-As a developer,  
-I can fetch all the cocktails from the `/api/cocktails` endpoint and render them server-side in Card components,  
+As a developer,
+I can fetch all the cocktails from the `/api/cocktails` endpoint and render them server-side in Card components,
 So the recipes page loads efficiently with pre-rendered data.
 ```
 

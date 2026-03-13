@@ -3,13 +3,13 @@
     text-decoration: none;
   }
 
-  .link .text {
+  .link {
     color: var(--color-link);
     transition: color var(--transition-speed);
   }
 
   @media (hover: hover) {
-    .link:hover .text {
+    .link:hover {
       color: var(--color-link-hover);
     }
   }

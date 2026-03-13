@@ -1,10 +1,10 @@
 declare namespace React {
-  interface ButtonHTMLAttributes<T> {
+  interface ButtonHTMLAttributes {
     popovertarget?: string;
-    popovertargetaction?: 'toggle' | 'show' | 'hide';
+    popovertargetaction?: "toggle" | "show" | "hide";
   }
 
-  interface HTMLAttributes<T> {
-    popover?: 'auto' | 'manual' | '';
+  interface HTMLAttributes {
+    popover?: "auto" | "manual" | "";
   }
 }

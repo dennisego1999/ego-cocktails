@@ -3,8 +3,8 @@
 ## User story
 
 ```
-As a user,  
-I can search for a cocktail on the recipes page,  
+As a user,
+I can search for a cocktail on the recipes page,
 So I can quickly find the cocktail I'm looking for.
 ```
 

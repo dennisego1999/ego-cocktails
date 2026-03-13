@@ -3,8 +3,8 @@
 ## User story
 
 ```
-As a user,  
-I can see both lists of cocktails displayed in a responsive grid layout,  
+As a user,
+I can see both lists of cocktails displayed in a responsive grid layout,
 So I can easily browse them on any device.
 ```
 

@@ -1,7 +1,7 @@
 import { HTMLTag } from "@/app/types/html-tag";
-import { ReactNode } from "react";
+import { ReactNode, AriaAttributes } from "react";
 
-type SectionProps = {
+type SectionProps = AriaAttributes & {
   tag?: HTMLTag;
   align?: string | null;
   justify?: string | null;
@@ -16,6 +16,7 @@ type SectionProps = {
   wrap?: boolean;
   className?: string;
   children?: ReactNode;
+  role?: string;
 };
 
 export default SectionProps;

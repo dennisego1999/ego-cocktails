@@ -1,10 +1,10 @@
 @layer theme {
-    [data-theme="dark"] {
-        --color-background: var(--color-neutral-black);
-        --color-heading: var(--color-neutral-white);
-        --color-text: var(--color-neutral-white);
+  [data-theme="dark"] {
+    --color-background: var(--color-neutral-black);
+    --color-heading: var(--color-neutral-white);
+    --color-text: var(--color-neutral-white);
 
-        --color-link: var(--color-text);
-        --color-link-hover: var(--color-neutral-300);
-    }
+    --color-link: var(--color-text);
+    --color-link-hover: var(--color-neutral-300);
+  }
 }

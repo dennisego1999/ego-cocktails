@@ -3,9 +3,9 @@
 ## User story
 
 ```
-As a user,  
-I can see the most popular cocktails on the homepage,  
-So I can get inspired on which cocktail to make.  
+As a user,
+I can see the most popular cocktails on the homepage,
+So I can get inspired on which cocktail to make.
 ```
 
 ## ✅ Acceptance criteria
@@ -20,4 +20,3 @@ So I can get inspired on which cocktail to make.
 ## 💡 Tips
 
 - Think about how popularity is determined – could be a mock API
-

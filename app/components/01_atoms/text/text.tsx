@@ -16,11 +16,7 @@ export default function Text({
   ...rest
 }: TextProps) {
   return (
-    <Tag
-      className={`text${className ? ` ${className}` : ""}`}
-      data-font-size={fontSize}
-      {...rest}
-    >
+    <Tag className={`text${className ? ` ${className}` : ""}`} data-font-size={fontSize} {...rest}>
       {children}
     </Tag>
   );

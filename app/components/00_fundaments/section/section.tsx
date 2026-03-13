@@ -15,6 +15,8 @@ export default function Section({
   wrap = false,
   className,
   children,
+  role,
+  ...aria
 }: SectionProps) {
   const Component = Tag as React.ElementType;
 
@@ -32,6 +34,8 @@ export default function Section({
       data-theme={theme}
       data-gap={gap}
       data-wrap={wrap}
+      role={role}
+      {...aria}
     >
       {children}
     </Component>
