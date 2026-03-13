@@ -1,4 +1,4 @@
-import ISectionProps from "@/app/contracts/ISectionProps";
+import SectionProps from "./section-props";
 
 export default function Section({
   tag: Tag = "section",
@@ -15,7 +15,7 @@ export default function Section({
   wrap = false,
   className,
   children,
-}: ISectionProps) {
+}: SectionProps) {
   const Component = Tag as React.ElementType;
 
   return (
