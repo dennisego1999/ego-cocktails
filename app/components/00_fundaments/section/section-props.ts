@@ -1,7 +1,7 @@
-import { HTMLTag } from "../types/html-tag";
+import { HTMLTag } from "@/app/types/html-tag";
 import { ReactNode } from "react";
 
-export default interface ISectionProps {
+type SectionProps = {
   tag?: HTMLTag;
   align?: string | null;
   justify?: string | null;
@@ -16,4 +16,6 @@ export default interface ISectionProps {
   wrap?: boolean;
   className?: string;
   children?: ReactNode;
-}
+};
+
+export default SectionProps;

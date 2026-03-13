@@ -1,8 +1,8 @@
-import INavMenuProps from "@/app/contracts/INavMenuProps";
+import NavMenuProps from "@/app/components/02_molecules/nav-menu/nav-menu-props";
 import Link from "../../01_atoms/link/link";
 import Section from "../../00_fundaments/section/section";
 
-export default function NavMenu({ className, isMobile = false }: INavMenuProps) {
+export default function NavMenu({ className, isMobile = false }: NavMenuProps) {
     // Remove any falsey items from list
     const classes = ["nav-menu", className].filter(Boolean).join(" ");
 

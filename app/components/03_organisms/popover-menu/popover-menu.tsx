@@ -1,8 +1,9 @@
 "use client"
 
+import PopoverMenuProps from "@/app/components/03_organisms/popover-menu/popover-menu-props";
 import { useRef, useEffect } from "react";
 
-export default function PopoverMenu({ id, children }: { id: string; children: React.ReactNode }) {
+export default function PopoverMenu({ id, children }: PopoverMenuProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
