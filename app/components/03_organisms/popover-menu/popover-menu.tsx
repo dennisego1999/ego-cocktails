@@ -14,7 +14,7 @@ export default function PopoverMenu({ id, children }: { id: string; children: Re
 
     const mediaQuery = window.matchMedia("(width >= 64rem)");
 
-    const handleBreakpoint = (e: MediaQueryListEvent | MediaQueryList) => {
+    const handleBreakpoint = (e: MediaQueryListEvent) => {
       if (e.matches) {
         el.hidePopover?.();
       }
