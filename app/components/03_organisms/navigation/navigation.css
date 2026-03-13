@@ -1,18 +1,25 @@
 @layer organisms {
+    :root {
+        --navigation-height: 75px;
+    }
+
     nav.navigation {
-        --section-padding-block-start: 1.5rem;
-        --section-padding-block-end: 1.5rem;
+        position: fixed;
+        z-index: 10;
+        width: 100%;
+        height: var(--navigation-height);
+        padding-block: 1.4rem;
     }
 
     ul.navigation__links {
         display: none;
-        list-style: none;
 
         @media (width >= 64rem) {
             display: flex;
         }
     }
 
+    .navigation__mobile-links,
     .navigation .hamburger {
         @media (width >= 64rem) {
             display: none;

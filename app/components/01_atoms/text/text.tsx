@@ -1,4 +1,4 @@
-import { HTMLTag } from "@/app/types/HtmlTag";
+import { HTMLTag } from "@/app/types/html-tag";
 import React from "react";
 
 interface TextProps {

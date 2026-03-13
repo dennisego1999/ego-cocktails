@@ -28,42 +28,42 @@
         transition: transform var(--transition-speed), aspect-ratio var(--transition-speed);
     }
 
-     .hamburger__inner:before,
-     .hamburger__center,
-     .hamburger__inner:after {
-        transition-property: transform,left,right,bottom;
+    .hamburger__inner:before,
+    .hamburger__center,
+    .hamburger__inner:after {
+        transition-property: transform, left, right, bottom;
         transition-duration: var(--transition-speed);
         display: block;
         width: 100%;
         height: var(--hamburger-bar-size);
         content: "";
         background-color: var(--color-text);
-        border-radius: var(--hamburger-border-radius)
+        border-radius: var(--hamburger-border-radius);
     }
 
-    .hamburger__inner::before, 
+    .hamburger__inner::before,
     .hamburger__inner::after {
         width: 75%;
     }
 
-    .hamburger[data-open="true"] .hamburger__inner {
+    .navigation:has(.popover-menu:popover-open) .hamburger .hamburger__inner {
         rotate: 45deg;
         align-items: center;
         justify-content: center;
     }
 
-    .hamburger[data-open="true"] .hamburger__inner::before {
+    .navigation:has(.popover-menu:popover-open) .hamburger .hamburger__inner::before {
         transform-origin: calc(50% - var(--hamburger-bar-size) / 2) calc(50% + var(--hamburger-bar-size) / 2);
         transform: rotate(90deg);
         width: 100%;
     }
 
-    .hamburger[data-open="true"] .hamburger__inner::after {
+    .navigation:has(.popover-menu:popover-open) .hamburger .hamburger__inner::after {
         transform: translateY(-100%);
         width: 100%;
     }
 
-    .hamburger[data-open="true"] .hamburger__center {
+    .navigation:has(.popover-menu:popover-open) .hamburger .hamburger__center {
         opacity: 0;
     }
 }

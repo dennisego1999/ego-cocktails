@@ -1,4 +1,4 @@
-import { HTMLTag } from "../types/HtmlTag";
+import { HTMLTag } from "../types/html-tag";
 import { ReactNode } from "react";
 
 export default interface ISectionProps {

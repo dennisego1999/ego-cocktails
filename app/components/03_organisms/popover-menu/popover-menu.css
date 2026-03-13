@@ -1,0 +1,21 @@
+@layer organisms {
+    .popover-menu {
+        transition: display var(--transition-speed) allow-discrete, overlay var(--transition-speed-slow) allow-discrete, top var(--transition-speed), left var(--transition-speed);
+        top: var(--navigation-height);
+        left: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        height: 100%;
+        max-height: calc(100dvh - var(--navigation-height));
+        margin: 0;
+        padding: 0;
+        border: none;
+        background-color: var(--color-background);
+    }
+
+    .popover-menu:popover-open {
+        left: 0;
+    }
+}

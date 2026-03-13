@@ -1,24 +1,30 @@
-import Link from "../../01_atoms/link/link";
 import Logo  from "../../01_atoms/logo/logo";
 import Section from "../../00_fundaments/section/section";
 import Hamburger from "../../01_atoms/hamburger/hamburger";
+import PopoverMenu from "../popover-menu/popover-menu";
+import NavMenu from "../../02_molecules/nav-menu/nav-menu";
 
 export default function Navigation() {
     return (
-        <Section className="navigation" tag="nav" flexDirection="row" justify="between" align="center" gap="tiny" gutter="both" theme="dark">
+        <Section 
+            className="navigation" 
+            tag="nav" 
+            flexDirection="row" 
+            justify="between" 
+            align="center" 
+            gap="tiny" 
+            gutter="both" 
+            theme="dark"
+        >
             <Logo />
 
-            <Section tag="ul" className="navigation__links" flexDirection="row" justify="end" gap="tiny">
-                <li>
-                    <Link href="/">Home</Link>
-                </li>
+            <NavMenu className="navigation__links" />
 
-                <li>
-                    <Link href="/recipes">All recipes</Link>
-                </li>
-            </Section>
+            <Hamburger popovertarget="mobile-nav" />
 
-            <Hamburger/>
+            <PopoverMenu id="mobile-nav">
+                <NavMenu className="navigation__mobile-links" isMobile={true} />
+            </PopoverMenu>
         </Section>
     )
 }
