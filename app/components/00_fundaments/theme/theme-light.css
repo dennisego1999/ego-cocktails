@@ -1,0 +1,10 @@
+@layer theme {
+    [data-theme="light"] {
+        --color-background: var(--color-neutral-white);
+        --color-heading: var(--color-neutral-black);
+        --color-text: var(--color-neutral-black);
+
+        --color-link: var(--color-text);
+        --color-link-hover: var(--color-neutral-700);
+    }
+}

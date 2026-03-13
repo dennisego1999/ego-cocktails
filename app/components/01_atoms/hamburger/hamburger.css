@@ -1,0 +1,69 @@
+@layer atoms {
+    .hamburger {
+        --hamburger-aspect-ratio: 10 / 8;
+        --hamburger-bar-size: 0.125rem;
+        --hamburger-border-radius: calc(var(--hamburger-bar-size) / 2);
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        aspect-ratio: var(--hamburger-aspect-ratio);
+        width: 1.3em;
+        rotate: 180deg;
+        color: var(--color-text);
+        transition: color var(--transition-speed), background-color var(--transition-speed);
+        border: none;
+        background: none;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .hamburger__inner {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        aspect-ratio: var(--hamburger-aspect-ratio);
+        transition: transform var(--transition-speed), aspect-ratio var(--transition-speed);
+    }
+
+     .hamburger__inner:before,
+     .hamburger__center,
+     .hamburger__inner:after {
+        transition-property: transform,left,right,bottom;
+        transition-duration: var(--transition-speed);
+        display: block;
+        width: 100%;
+        height: var(--hamburger-bar-size);
+        content: "";
+        background-color: var(--color-text);
+        border-radius: var(--hamburger-border-radius)
+    }
+
+    .hamburger__inner::before, 
+    .hamburger__inner::after {
+        width: 75%;
+    }
+
+    .hamburger[data-open="true"] .hamburger__inner {
+        rotate: 45deg;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hamburger[data-open="true"] .hamburger__inner::before {
+        transform-origin: calc(50% - var(--hamburger-bar-size) / 2) calc(50% + var(--hamburger-bar-size) / 2);
+        transform: rotate(90deg);
+        width: 100%;
+    }
+
+    .hamburger[data-open="true"] .hamburger__inner::after {
+        transform: translateY(-100%);
+        width: 100%;
+    }
+
+    .hamburger[data-open="true"] .hamburger__center {
+        opacity: 0;
+    }
+}

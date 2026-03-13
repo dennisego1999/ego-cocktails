@@ -1,23 +1,33 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import './components/00_fundaments/misc/transition.css';
+@import './components/00_fundaments/fonts/fonts.css';
+@import './components/00_fundaments/color/color.css';
+@import './components/00_fundaments/section/section.css';
+@import './components/00_fundaments/theme/theme-light.css';
+@import './components/00_fundaments/theme/theme-dark.css';
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@import './components/01_atoms/link/link.css';
+@import './components/01_atoms/text/text.css';
+@import './components/01_atoms/logo/logo.css';
+@import './components/01_atoms/hamburger/hamburger.css';
+
+@import './components/03_organisms/navigation/navigation.css';
+
+html,
+body {
+    margin: 0;
+    padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+body > :not(main) {
+    flex: none;
+}
+
+main {
+    flex: auto;
 }

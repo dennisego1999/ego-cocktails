@@ -1,0 +1,11 @@
+:root {
+  --transition-speed-fast: 150ms;
+  --transition-speed-normal: 250ms;
+  --transition-speed-slow: 500ms;
+  --transition-speed-snail: 1s;
+  --transition-speed: var(--transition-speed-normal);
+}
+
+html {
+  scroll-behavior: smooth;
+}

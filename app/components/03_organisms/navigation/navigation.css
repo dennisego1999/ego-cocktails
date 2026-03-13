@@ -1,0 +1,21 @@
+@layer organisms {
+    nav.navigation {
+        --section-padding-block-start: 1.5rem;
+        --section-padding-block-end: 1.5rem;
+    }
+
+    ul.navigation__links {
+        display: none;
+        list-style: none;
+
+        @media (width >= 64rem) {
+            display: flex;
+        }
+    }
+
+    .navigation .hamburger {
+        @media (width >= 64rem) {
+            display: none;
+        }
+    }
+}

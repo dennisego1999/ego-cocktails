@@ -1,0 +1,227 @@
+@layer atoms {
+    .section {
+        --section-gap: 0;
+
+        --section-padding-tiny: 40px;
+        --section-padding-small: 40px;
+        --section-padding-medium: 40px;
+        --section-padding-large: 40px;
+
+        --section-gutter-tiny: 20px;
+        --section-gutter-small: 20px;
+        --section-gutter-medium: 20px;
+        --section-gutter-large: 20px;
+
+        --section-padding: var(--section-padding-large);
+        --section-padding-block-start: 0rem;
+        --section-padding-block-end: 0rem;
+        --section-gutter-left: 0rem;
+        --section-gutter-right: 0rem;
+
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        gap: var(--section-gap);
+        padding-block-start: var(--section-padding-block-start);
+        padding-block-end: var(--section-padding-block-end);
+        padding-inline-start: var(--section-gutter-left);
+        padding-inline-end: var(--section-gutter-right);
+        background-color: var(--color-background);
+        margin: 0;
+
+        @media (width >= 40rem) {
+            --section-padding-tiny: 43px;
+            --section-padding-small: 50px;
+            --section-padding-medium: 55px;
+            --section-padding-large: 55px;
+
+            --section-gutter-tiny: 21px;
+            --section-gutter-small: 27px;
+            --section-gutter-medium: 35px;
+            --section-gutter-large: 35px;
+        }
+
+        @media (width >= 48rem) {
+            --section-padding-tiny: 46px;
+            --section-padding-small: 60px;
+            --section-padding-medium: 70px;
+            --section-padding-large: 70px;
+
+            --section-gutter-tiny: 22px;
+            --section-gutter-small: 34px;
+            --section-gutter-medium: 50px;
+            --section-gutter-large: 50px;
+        }
+
+        @media (width >= 64rem) {
+            --section-padding-tiny: 49px;
+            --section-padding-small: 70px;
+            --section-padding-medium: 85px;
+            --section-padding-large: 85px;
+
+            --section-gutter-tiny: 23px;
+            --section-gutter-small: 40px;
+            --section-gutter-medium: 70px;
+            --section-gutter-large: 70px;
+        }
+
+        @media (width >= 80rem) {
+            --section-padding-tiny: 51px;
+            --section-padding-small: 75px;
+            --section-padding-medium: 100px;
+            --section-padding-large: 100px;
+
+            --section-gutter-tiny: 23px;
+            --section-gutter-small: 46px;
+            --section-gutter-medium: 90px;
+            --section-gutter-large: 90px;
+        }
+
+        @media (width >= 96rem) {
+            --section-padding-tiny: 52px;
+            --section-padding-small: 80px;
+            --section-padding-medium: 100px;
+            --section-padding-large: 120px;
+
+            --section-gutter-tiny: 24px;
+            --section-gutter-small: 52px;
+            --section-gutter-medium: 100px;
+            --section-gutter-large: 120px;
+        }
+
+        &[data-flex-direction="row"] { 
+            flex-direction: row; 
+        }
+
+        &[data-flex-direction="row-reverse"] { 
+            flex-direction: row-reverse; 
+        }
+
+        &[data-wrap]:not([data-wrap="false"]) { 
+            flex-wrap: wrap; 
+        }
+
+        &[data-gap] { 
+            --section-gap: var(--section-gutter-large); 
+        }
+
+        &[data-gap="large"] { 
+            --section-gap: var(--section-gutter-large); 
+        }
+
+        &[data-gap="medium"] { 
+            --section-gap: var(--section-gutter-medium); 
+        }
+
+        &[data-gap="small"] { 
+            --section-gap: var(--section-gutter-small); 
+        }
+
+        &[data-gap="tiny"] { 
+            --section-gap: var(--section-gutter-tiny); 
+        }
+
+        &[data-padding="both"] {
+            --section-padding-block-start: var(--section-padding);
+            --section-padding-block-end: var(--section-padding);
+        }
+
+        &[data-padding="top"] { 
+            --section-padding-block-start: var(--section-padding); 
+        }
+
+        &[data-padding="bottom"] { 
+            --section-padding-block-end: var(--section-padding); 
+        }
+
+        &[data-padding-size="large"] { 
+            --section-padding: var(--section-padding-large); 
+        }
+
+        &[data-padding-size="medium"] {
+            --section-padding: var(--section-padding-medium); 
+        }
+
+        &[data-padding-size="small"] { 
+            --section-padding: var(--section-padding-small); 
+        }
+
+        &[data-padding-size="tiny"] { 
+            --section-padding: var(--section-padding-tiny); 
+        }
+
+        &[data-gutter="both"] {
+            --section-gutter-left: var(--section-gutter);
+            --section-gutter-right: var(--section-gutter);
+        }
+
+        &[data-gutter="left"] { 
+            --section-gutter-left: var(--section-gutter); 
+        }
+
+        &[data-gutter="right"] { 
+            --section-gutter-right: var(--section-gutter); 
+        }
+
+        &[data-gutter]:not([data-gutter="false"]) { 
+            --section-gutter: var(--section-gutter-large); 
+        }
+
+        &[data-gutter-size="large"] { 
+            --section-gutter: var(--section-gutter-large); 
+        }
+
+        &[data-gutter-size="medium"] { 
+            --section-gutter: var(--section-gutter-medium); 
+        }
+
+        &[data-gutter-size="small"] { 
+            --section-gutter: var(--section-gutter-small); 
+        }
+
+        &[data-gutter-size="tiny"] { 
+            --section-gutter: var(--section-gutter-tiny); 
+        }
+
+        &[data-align="start"], &[data-align="left"] { 
+            align-items: start; 
+        }
+
+        &[data-align="center"] { 
+            align-items: center; 
+        }
+
+        &[data-align="end"], &[data-align="right"] { 
+            align-items: end; 
+        }
+
+        &[data-align="stretch"] { 
+            align-items: stretch; 
+        }
+
+        &[data-justify="start"], &[data-justify="left"] { 
+            justify-content: start; 
+        }
+
+        &[data-justify="center"] { 
+            justify-content: center; 
+        }
+
+        &[data-justify="end"], &[data-justify="right"] { 
+            justify-content: end; 
+        }
+
+        &[data-justify="between"] { 
+            justify-content: space-between; 
+        }
+
+        &[data-justify="around"] { 
+            justify-content: space-around; 
+        }
+
+        &[data-justify="stretch"] { 
+            justify-content: stretch; 
+        }
+    }
+}

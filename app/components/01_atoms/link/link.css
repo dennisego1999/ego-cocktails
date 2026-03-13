@@ -1,0 +1,16 @@
+@layer atoms {
+  .link {
+    text-decoration: none;
+  }
+
+  .link .text {
+    color: var(--color-link);
+    transition: color var(--transition-speed);
+  }
+
+  @media (hover: hover) {
+    .link:hover .text {
+      color: var(--color-link-hover);
+    }
+  }
+}
