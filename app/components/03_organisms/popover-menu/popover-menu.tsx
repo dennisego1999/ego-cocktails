@@ -20,9 +20,22 @@ export default function PopoverMenu({ id, children }: { id: string; children: Re
       }
     };
 
+    const handleLinkClick = (e: MouseEvent) => {
+      if ((e.target as HTMLElement).closest(".navigation__mobile-links a")) {
+        el.hidePopover?.();
+      }
+    };
+
+    // Close popover when viewport reaches desktop breakpoint
     mediaQuery.addEventListener("change", handleBreakpoint);
 
-    return () => mediaQuery.removeEventListener("change", handleBreakpoint);
+    // Close popover when a mobile nav link is clicked
+    el.addEventListener("click", handleLinkClick);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleBreakpoint);
+      el.removeEventListener("click", handleLinkClick);
+    };
   });
 
   return (
