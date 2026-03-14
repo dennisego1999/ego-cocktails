@@ -4,7 +4,7 @@
   }
 
   .skip-link:focus {
-    margin-top: 1rem;
+    margin-block: 1rem;
   }
 
   .skip-link:not(:focus) {
