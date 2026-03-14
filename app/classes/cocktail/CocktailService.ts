@@ -1,0 +1,36 @@
+import CocktailDTO from "./CocktailDTO";
+import ICocktailRepository from "./ICocktailRepository";
+
+export default class CocktailService {
+  private static _instance: CocktailService;
+
+  private constructor(private repo: ICocktailRepository) {
+    //
+  }
+
+  public static get instance(): CocktailService {
+    if (!this._instance) {
+      throw new Error("CocktailService has not been initialized. Call init() first.");
+    }
+
+    return this._instance;
+  }
+
+  public static init(repo: ICocktailRepository): CocktailService {
+    if (!this._instance) {
+      this._instance = new CocktailService(repo);
+    }
+
+    return this._instance;
+  }
+
+  /**
+   * Returns top N cocktails sorted by popularity
+   * @param limit - Number of cocktails to return (default: 5)
+   */
+  public async getPopular(limit: number = 5): Promise<CocktailDTO[]> {
+    const allCocktails = await this.repo.getAll();
+
+    return allCocktails.sort((a, b) => b.popularity - a.popularity).slice(0, limit);
+  }
+}
