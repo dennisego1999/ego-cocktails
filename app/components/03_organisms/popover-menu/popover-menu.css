@@ -5,14 +5,14 @@
       overlay var(--transition-speed-slow) allow-discrete,
       top var(--transition-speed),
       left var(--transition-speed);
-    top: var(--navigation-height);
+    top: var(--header-height);
     left: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
     height: 100%;
-    max-height: calc(100dvh - var(--navigation-height));
+    max-height: calc(100dvh - var(--header-height));
     margin: 0;
     padding: 0;
     border: none;

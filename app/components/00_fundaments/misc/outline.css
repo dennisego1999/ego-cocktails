@@ -1,0 +1,15 @@
+@layer fundaments {
+  :root {
+    --outline-width: 0.125em;
+    --outline-style: solid;
+    --outline-offset: 0.125em;
+    --outline-offset-inner: -0.35em;
+  }
+
+  *:focus-visible {
+    outline-width: var(--outline-width);
+    outline-color: var(--color-outline);
+    outline-style: var(--outline-style);
+    outline-offset: var(--outline-offset);
+  }
+}

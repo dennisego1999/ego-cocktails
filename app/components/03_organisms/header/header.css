@@ -1,14 +1,25 @@
 @layer organisms {
   :root {
-    --navigation-height: 75px;
+    --header-height: 75px;
   }
 
-  .navigation {
+  .header {
     position: fixed;
     z-index: 10;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: var(--navigation-height);
+    height: var(--header-height);
     padding-block: 1.4rem;
+  }
+
+  .header-footprint {
+    position: absolute;
+    top: 0;
+    display: block;
+    width: 100%;
+    height: var(--header-height);
+    pointer-events: none;
   }
 
   ul.navigation__links {
@@ -20,7 +31,7 @@
   }
 
   .navigation__mobile-links,
-  .navigation .hamburger {
+  .header .hamburger {
     @media (width >= 64rem) {
       display: none;
     }

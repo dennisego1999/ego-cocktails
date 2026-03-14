@@ -1,0 +1,19 @@
+@layer atoms {
+  .skip-link {
+    width: fit-content;
+  }
+
+  .skip-link:focus {
+    margin-top: 1rem;
+  }
+
+  .skip-link:not(:focus) {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+}

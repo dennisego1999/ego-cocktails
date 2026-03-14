@@ -1,0 +1,96 @@
+@layer atoms {
+  :root {
+    --heading-font-size-base: 1.5rem;
+
+    --heading-font: "Roboto Condensed", sans-serif;
+    --heading-font-weight: 500;
+    --heading-line-height: 1.2;
+    --heading-color: var(--color-heading);
+
+    --heading-font-size-scale: 1.25;
+    --heading-font-size-0: calc(var(--heading-font-size-1) * var(--heading-font-size-scale));
+    --heading-font-size-1: calc(var(--heading-font-size-2) * var(--heading-font-size-scale));
+    --heading-font-size-2: calc(var(--heading-font-size-3) * var(--heading-font-size-scale));
+    --heading-font-size-3: calc(var(--heading-font-size-4) * var(--heading-font-size-scale));
+    --heading-font-size-4: calc(var(--heading-font-size-5) * var(--heading-font-size-scale));
+    --heading-font-size-5: var(--heading-font-size-base);
+  }
+
+  .heading,
+  .text :is(h1, h2, h3, h4, h5, h6) {
+    --heading-color: var(--color-heading);
+
+    transition: color var(--transition-speed);
+    color: var(--color, var(--heading-color));
+    font-family: var(--heading-font);
+    font-size: var(--heading-font-size);
+    font-weight: var(--heading-font-weight);
+    line-height: var(--heading-line-height);
+    text-wrap: pretty;
+    user-select: inherit;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: auto;
+    margin: 0;
+
+    @media (width >= 40rem) {
+      --heading-font-size-base: 1.625rem;
+    }
+
+    @media (width >= 48rem) {
+      --heading-font-size-base: 1.75rem;
+    }
+
+    @media (width >= 64rem) {
+      --heading-font-size-base: 1.875rem;
+    }
+
+    @media (width >= 80rem) {
+      --heading-font-size-base: 2rem;
+    }
+
+    @media (width >= 96rem) {
+      --heading-font-size-base: 2.25rem;
+    }
+
+    a[href]:not([href=""]) {
+      transition: color var(--transition-speed);
+      color: var(--heading-color);
+      text-decoration: none;
+
+      &:hover {
+        @media (hover: hover) {
+          color: var(--color-link);
+        }
+      }
+    }
+
+    strong {
+      font-weight: 700;
+    }
+
+    small {
+      font-size: 0.8em;
+      font-weight: initial;
+    }
+  }
+
+  [data-heading-size="0"] {
+    --heading-font-size: var(--heading-font-size-0);
+  }
+  [data-heading-size="1"] {
+    --heading-font-size: var(--heading-font-size-1);
+  }
+  [data-heading-size="2"] {
+    --heading-font-size: var(--heading-font-size-2);
+  }
+  [data-heading-size="3"] {
+    --heading-font-size: var(--heading-font-size-3);
+  }
+  [data-heading-size="4"] {
+    --heading-font-size: var(--heading-font-size-4);
+  }
+  [data-heading-size="5"] {
+    --heading-font-size: var(--heading-font-size-5);
+  }
+}

@@ -52,5 +52,6 @@
       var(--color-neutral-white) 5%
     );
     --color-neutral-black: #000000;
+    --color-neutral-red: #ff3b30;
   }
 }

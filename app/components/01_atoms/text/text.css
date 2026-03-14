@@ -7,13 +7,13 @@
     --text-line-height: 1.5;
     --text-color: var(--color-text);
 
-    --text-font-size-scale-text: 1.125;
-    --text-font-size-0: calc(var(--text-font-size-base) * var(--text-font-size-scale-text));
-    --text-font-size-1: var(--text-font-size-base);
-    --text-font-size-2: calc(var(--text-font-size-base) / var(--text-font-size-scale-text));
-    --text-font-size-3: calc(var(--text-font-size-2) / var(--text-font-size-scale-text));
-    --text-font-size-4: calc(var(--text-font-size-3) / var(--text-font-size-scale-text));
-    --text-font-size-5: calc(var(--text-font-size-4) / var(--text-font-size-scale-text));
+    --text-font-size-scale: 1.125;
+    --text-font-size-0: calc(var(--text-font-size-1) * var(--text-font-size-scale));
+    --text-font-size-1: calc(var(--text-font-size-2) * var(--text-font-size-scale));
+    --text-font-size-2: calc(var(--text-font-size-3) * var(--text-font-size-scale));
+    --text-font-size-3: calc(var(--text-font-size-4) * var(--text-font-size-scale));
+    --text-font-size-4: calc(var(--text-font-size-5) * var(--text-font-size-scale));
+    --text-font-size-5: var(--text-font-size-base);
   }
 
   .text {
@@ -58,27 +58,22 @@
     }
   }
 
-  [data-font-size="0"] {
+  [data-text-size="0"] {
     --text-font-size: var(--text-font-size-0);
   }
-
-  [data-font-size="1"] {
+  [data-text-size="1"] {
     --text-font-size: var(--text-font-size-1);
   }
-
-  [data-font-size="2"] {
+  [data-text-size="2"] {
     --text-font-size: var(--text-font-size-2);
   }
-
-  [data-font-size="3"] {
+  [data-text-size="3"] {
     --text-font-size: var(--text-font-size-3);
   }
-
-  [data-font-size="4"] {
+  [data-text-size="4"] {
     --text-font-size: var(--text-font-size-4);
   }
-
-  [data-font-size="5"] {
+  [data-text-size="5"] {
     --text-font-size: var(--text-font-size-5);
   }
 }

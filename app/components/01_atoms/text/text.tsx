@@ -1,22 +1,17 @@
-import { HTMLTag } from "@/app/types/html-tag";
 import React from "react";
-
-interface TextProps {
-  tag?: HTMLTag;
-  fontSize?: string;
-  className?: string;
-  children?: React.ReactNode;
-}
+import TextProps from "./text-props";
 
 export default function Text({
   tag: Tag = "p",
-  fontSize = "inherit",
+  size = "inherit",
   className,
   children,
   ...rest
 }: TextProps) {
+  const classes = ["text", className].filter(Boolean).join(" ");
+
   return (
-    <Tag className={`text${className ? ` ${className}` : ""}`} data-font-size={fontSize} {...rest}>
+    <Tag className={classes} data-text-size={size} {...rest}>
       {children}
     </Tag>
   );

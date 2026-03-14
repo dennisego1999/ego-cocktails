@@ -1,0 +1,38 @@
+@layer atoms {
+  :root {
+    --button-disabled-opacity: 0.3;
+  }
+
+  .button {
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-button-border);
+    background-color: var(--color-button-background);
+    padding: 0.5rem 0.75rem;
+    font-size: inherit;
+    font-weight: bold;
+    color: var(--color-button-text);
+    transition: all var(--transition-speed);
+    text-decoration: none;
+    width: fit-content;
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--color-button-background-hover);
+        border-color: var(--color-button-border-hover);
+        color: var(--color-button-text-hover);
+      }
+    }
+  }
+
+  .button:disabled,
+  .button--disabled {
+    background-color: var(--color-button-background-disabled);
+    pointer-events: none;
+    opacity: var(--button-disabled-opacity);
+    border-color: var(--color-button-border-disabled);
+    color: var(--color-button-text-disabled);
+  }
+}

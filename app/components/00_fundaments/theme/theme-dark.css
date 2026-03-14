@@ -3,8 +3,22 @@
     --color-background: var(--color-neutral-black);
     --color-heading: var(--color-neutral-white);
     --color-text: var(--color-neutral-white);
+    --color-accent: var(--color-neutral-500);
+    --color-outline: var(--color-neutral-red);
 
     --color-link: var(--color-text);
     --color-link-hover: var(--color-neutral-300);
+
+    --color-button-text: var(--color-neutral-black);
+    --color-button-border: var(--color-accent);
+    --color-button-background: var(--color-neutral-white);
+
+    --color-button-text-hover: var(--color-neutral-black);
+    --color-button-border-hover: var(--color-accent);
+    --color-button-background-hover: var(--color-neutral-200);
+
+    --color-button-text-disabled: var(--color-neutral-black);
+    --color-button-border-disabled: var(--color-neutral-100);
+    --color-button-background-disabled: var(--color-neutral-100);
   }
 }

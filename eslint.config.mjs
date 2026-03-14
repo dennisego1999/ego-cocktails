@@ -11,6 +11,7 @@ const eslintConfig = defineConfig([
     rules: {
       "@typescript-eslint/no-unused-vars": "warn",
       "no-multiple-empty-lines": ["warn", { max: 1 }],
+      "react/no-unescaped-entities": "off",
     },
   },
   globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),

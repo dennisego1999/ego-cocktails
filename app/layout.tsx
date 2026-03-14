@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navigation from "./components/03_organisms/navigation/navigation";
+import Header from "./components/03_organisms/header/header";
+import SkipLink from "./components/01_atoms/skip-link/skip-link";
 
 export const metadata: Metadata = {
   title: "Ego Cocktails",
@@ -15,9 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navigation />
+        <SkipLink />
 
-        <main>{children}</main>
+        <Header />
+
+        <main id="content">{children}</main>
       </body>
     </html>
   );
