@@ -1,11 +1,12 @@
 "use client";
 
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useState, useRef, useCallback, useEffect, FormEvent, ChangeEvent, useMemo } from "react";
+import debounce from "lodash/debounce";
 import Section from "../../00_fundaments/section/section";
 import InputField from "../../01_atoms/input-field/input-field";
 import SearchBarProps from "./search-bar-props";
 import Form from "../../01_atoms/form/form";
-import { useState, useRef, FormEvent, ChangeEvent } from "react";
 
 export default function SearchBar({
   onSubmit,
@@ -18,31 +19,35 @@ export default function SearchBar({
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState(searchParams.get("q") || "");
-  const searchDebounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
-  const updateUrlAndSubmit = (value: string | null) => {
-    const params = new URLSearchParams(searchParams);
-    if (value) {
-      params.set("q", value);
-    } else {
-      params.delete("q");
-    }
+  const updateUrlAndSubmit = useCallback(
+    (value: string | null) => {
+      const params = new URLSearchParams(searchParams);
+      if (value) {
+        params.set("q", value);
+      } else {
+        params.delete("q");
+      }
+      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+      onSubmit(value);
+    },
+    [searchParams, pathname, router, onSubmit],
+  );
 
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
-    onSubmit(value);
+  const debouncedUpdate = useMemo(
+    () => debounce((value: string) => updateUrlAndSubmit(value), 300),
+    [updateUrlAndSubmit],
+  );
 
-    // Ensure input field stays focused
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 100);
-  };
+  useEffect(() => {
+    return () => {
+      debouncedUpdate.cancel();
+    };
+  }, [debouncedUpdate]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (searchDebounceTimeout.current) {
-      clearTimeout(searchDebounceTimeout.current);
-      searchDebounceTimeout.current = null;
-    }
+    debouncedUpdate.cancel();
     updateUrlAndSubmit(inputValue || null);
   };
 
@@ -51,21 +56,16 @@ export default function SearchBar({
     setInputValue(newValue);
 
     if (newValue === "") {
-      if (searchDebounceTimeout.current) {
-        clearTimeout(searchDebounceTimeout.current);
-        searchDebounceTimeout.current = null;
-      }
+      debouncedUpdate.cancel();
       updateUrlAndSubmit(null);
-      return;
+    } else {
+      debouncedUpdate(newValue);
     }
-
-    if (searchDebounceTimeout.current) {
-      clearTimeout(searchDebounceTimeout.current);
-    }
-    searchDebounceTimeout.current = setTimeout(() => {
-      updateUrlAndSubmit(newValue);
-    }, 300);
   };
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [searchParams]);
 
   return (
     <Form className="search-bar" onSubmit={handleSubmit}>
