@@ -2,6 +2,7 @@ import ICocktailClient from "./ICocktailClient";
 import CocktailDTO from "./CocktailDTO";
 import ICocktailRepository from "./ICocktailRepository";
 import CocktailFetchError from "./CocktailFetchError";
+import CocktailSearchError from "./CocktailSearchError";
 
 export default class CocktailRepository implements ICocktailRepository {
   constructor(private client: ICocktailClient) {
@@ -38,7 +39,7 @@ export default class CocktailRepository implements ICocktailRepository {
       const response = await this.client.search(query);
       return response.map((data) => CocktailDTO.fromResponse(data));
     } catch (e) {
-      throw new CocktailFetchError({ cause: e });
+      throw new CocktailSearchError(query);
     }
   }
 }

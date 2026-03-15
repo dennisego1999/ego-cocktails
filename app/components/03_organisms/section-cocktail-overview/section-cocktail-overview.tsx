@@ -14,6 +14,7 @@ import SearchBar from "../search-bar/search-bar";
 import Error from "../../01_atoms/error/error";
 import CocktailFetchError from "@/app/classes/cocktail/CocktailFetchError";
 import SectionCocktailOverviewProps from "./section-cocktail-overview-props";
+import CocktailSearchError from "@/app/classes/cocktail/CocktailSearchError";
 
 export default function SectionCocktailOverview({
   initialCocktails,
@@ -92,7 +93,7 @@ export default function SectionCocktailOverview({
       setIsSearchError(true);
       setDisplayedResults([]);
 
-      if (error instanceof CocktailFetchError) {
+      if (error instanceof CocktailSearchError) {
         console.error(error);
       } else {
         throw error;
@@ -138,6 +139,12 @@ export default function SectionCocktailOverview({
 
       {isSearchError && !isFetching && searchQuery && (
         <Error>Failed to find a cocktail for '{searchQuery}'</Error>
+      )}
+
+      {!isFetching && searchQuery && displayedResults.length === 0 && !isSearchError && (
+        <Text>
+          No cocktails found matching <strong>'{searchQuery}'</strong>
+        </Text>
       )}
 
       {hasNext && displayedResults.length > 0 && !isFetching && !searchQuery && (
