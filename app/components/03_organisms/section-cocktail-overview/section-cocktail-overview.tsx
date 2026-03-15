@@ -12,7 +12,6 @@ import Button from "../../01_atoms/button/button";
 import Loader from "../../01_atoms/loader/loader";
 import SearchBar from "../search-bar/search-bar";
 import Error from "../../01_atoms/error/error";
-import CocktailFetchError from "@/app/classes/cocktail/CocktailFetchError";
 import SectionCocktailOverviewProps from "./section-cocktail-overview-props";
 import CocktailSearchError from "@/app/classes/cocktail/CocktailSearchError";
 
@@ -31,6 +30,7 @@ export default function SectionCocktailOverview({
   const [offset, setOffset] = useState(10); // Start at 10 since we already have first page
   const [searchQuery, setSearchQuery] = useState<string | null>(null);
   const [isSearchError, setIsSearchError] = useState(false);
+  const [isInitializing, setIsInitializing] = useState(true);
 
   const limit = 10;
 
@@ -112,10 +112,14 @@ export default function SectionCocktailOverview({
       if (query) {
         await performSearch(query);
       }
+
+      if (pageResults.length > 0) {
+        setIsInitializing(false);
+      }
     }
 
     handleInitialLoad();
-  }, []); // Run once on mount
+  }, [pageResults]);
 
   return (
     <Section
@@ -135,7 +139,9 @@ export default function SectionCocktailOverview({
 
       <SearchBar onSubmit={performSearch} disabled={isFetching} />
 
-      {displayedResults.length > 0 && <CocktailList cocktails={displayedResults} />}
+      {displayedResults.length > 0 && (
+        <CocktailList cocktails={displayedResults} data-hidden={isInitializing} />
+      )}
 
       {isSearchError && !isFetching && searchQuery && (
         <Error>Failed to find a cocktail for '{searchQuery}'</Error>
@@ -147,7 +153,7 @@ export default function SectionCocktailOverview({
         </Text>
       )}
 
-      {hasNext && displayedResults.length > 0 && !isFetching && !searchQuery && (
+      {hasNext && displayedResults.length > 0 && !isFetching && !searchQuery && !isInitializing && (
         <Button onClick={fetchCocktailPage}>Load more</Button>
       )}
 

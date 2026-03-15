@@ -1,6 +1,7 @@
 @import "./components/00_fundaments/misc/transition.css";
 @import "./components/00_fundaments/misc/outline.css";
 @import "./components/00_fundaments/misc/border.css";
+@import "./components/00_fundaments/misc/visibility.css";
 @import "./components/00_fundaments/fonts/fonts.css";
 @import "./components/00_fundaments/color/color.css";
 @import "./components/00_fundaments/section/section.css";

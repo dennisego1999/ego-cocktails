@@ -1,0 +1,17 @@
+@layer fundaments {
+  /* Visually hide content but keep it accessible for screen readers and crawlers */
+  [data-hidden="true"]:not(:focus):not(:active) {
+    position: absolute;
+    width: 1px;
+    max-width: 1px;
+    height: 1px;
+    max-height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+    opacity: 0;
+  }
+}
