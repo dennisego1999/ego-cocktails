@@ -13,22 +13,23 @@ import Loader from "../../01_atoms/loader/loader";
 import SearchBar from "../search-bar/search-bar";
 import Error from "../../01_atoms/error/error";
 import CocktailFetchError from "@/app/classes/cocktail/CocktailFetchError";
+import SectionCocktailOverviewProps from "./section-cocktail-overview-props";
 
-export default function SectionCocktailOverview() {
+export default function SectionCocktailOverview({
+  initialCocktails,
+  initialHasNext,
+}: SectionCocktailOverviewProps) {
   const searchParams = useSearchParams();
 
-  // Two result arrays:
-  // - pageResults: ALL cocktails loaded so far via "Load more" (grows over time)
-  // - displayedResults: What the user actually sees (full list OR search results)
-  const [pageResults, setPageResults] = useState<CocktailDTO[]>([]);
-  const [displayedResults, setDisplayedResults] = useState<CocktailDTO[]>([]);
+  // Two result arrays initialized with server-fetched data
+  const [pageResults, setPageResults] = useState<CocktailDTO[]>(initialCocktails);
+  const [displayedResults, setDisplayedResults] = useState<CocktailDTO[]>(initialCocktails);
 
-  const [hasNext, setHasNext] = useState(false);
+  const [hasNext, setHasNext] = useState(initialHasNext);
   const [isFetching, setIsFetching] = useState(false);
-  const [offset, setOffset] = useState(0);
+  const [offset, setOffset] = useState(10); // Start at 10 since we already have first page
   const [searchQuery, setSearchQuery] = useState<string | null>(null);
   const [isSearchError, setIsSearchError] = useState(false);
-  const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   const limit = 10;
 
@@ -56,15 +57,6 @@ export default function SectionCocktailOverview() {
 
   /**
    * Search cocktails by name
-   *
-   * Two ways this gets called:
-   * 1. User types + submits SearchBar → calls this directly
-   * 2. Page loads with ?q=... in URL → useEffect calls this after data loads
-   *
-   * Why no duplicate searches?
-   * - Search only updates displayedResults, NOT pageResults
-   * - The useEffect below only triggers when pageResults changes
-   * - So manual searches don't trigger the effect => no duplicate
    */
   async function performSearch(query: string | null): Promise<void> {
     if (!query) {
@@ -109,35 +101,19 @@ export default function SectionCocktailOverview() {
     }
   }
 
-  // Initial load: fetch first page when component mounts
-  useEffect(() => {
-    fetchCocktailPage();
-  }, []);
-
   /**
    * Handle search query from URL on initial page load
-   *
-   * Why this works without duplicates:
-   * - Only runs when pageResults changes (new data loaded)
-   * - Does NOT run when searchParams changes
-   * - Manual searches via SearchBar call performSearch directly
-   * - So URL param only triggers search ONCE when page first loads
    */
   useEffect(() => {
     async function handleInitialLoad() {
       const query = searchParams.get("q");
-
-      if (query && pageResults.length > 0) {
+      if (query) {
         await performSearch(query);
-      }
-
-      if (pageResults.length > 0) {
-        setIsInitialLoading(false);
       }
     }
 
     handleInitialLoad();
-  }, [pageResults]);
+  }, []); // Run once on mount
 
   return (
     <Section
@@ -157,9 +133,7 @@ export default function SectionCocktailOverview() {
 
       <SearchBar onSubmit={performSearch} disabled={isFetching} />
 
-      {displayedResults.length > 0 && !isInitialLoading && (
-        <CocktailList cocktails={displayedResults} />
-      )}
+      {displayedResults.length > 0 && <CocktailList cocktails={displayedResults} />}
 
       {isSearchError && !isFetching && searchQuery && (
         <Error>Failed to find a cocktail for '{searchQuery}'</Error>

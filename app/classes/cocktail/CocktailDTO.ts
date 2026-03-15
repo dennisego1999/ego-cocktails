@@ -37,6 +37,18 @@ export default class CocktailDTO {
     );
   }
 
+  toJSON() {
+    return {
+      name: this.name,
+      glass: this.glass,
+      category: this.category,
+      popularity: this.popularity,
+      ingredients: this.ingredients,
+      garnish: this.garnish,
+      preparation: this.preparation,
+    };
+  }
+
   private static isValid(data: unknown): data is ICocktail {
     return (
       typeof data === "object" &&
