@@ -7,7 +7,7 @@ import Section from "../../00_fundaments/section/section";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/recipes", label: "All recipes" },
+  { href: "/cocktails", label: "All cocktails" },
 ];
 
 export default function NavMenu({

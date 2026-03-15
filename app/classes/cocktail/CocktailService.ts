@@ -29,8 +29,17 @@ export default class CocktailService {
    * @param limit - Number of cocktails to return (default: 5)
    */
   public async getPopular(limit: number = 5): Promise<CocktailDTO[]> {
-    const allCocktails = await this.repo.getAll();
-
+    const { cocktails: allCocktails } = await this.repo.getAll({ paginate: false });
     return allCocktails.sort((a, b) => b.popularity - a.popularity).slice(0, limit);
+  }
+
+  /**
+   * Returns a page of cocktails
+   * @param page - Page number (1-indexed)
+   * @param pageSize - Number of items per page (default: 10)
+   */
+  public async getPage(page: number = 1, pageSize: number = 10) {
+    const offset = (page - 1) * pageSize;
+    return this.repo.getAll({ offset, limit: pageSize, paginate: true });
   }
 }

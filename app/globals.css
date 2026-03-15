@@ -14,6 +14,7 @@
 @import "./components/01_atoms/hamburger/hamburger.css";
 @import "./components/01_atoms/button/button.css";
 @import "./components/01_atoms/skip-link/skip-link.css";
+@import "./components/01_atoms/loader/loader.css";
 
 @import "./components/02_molecules/nav-menu/nav-menu.css";
 @import "./components/02_molecules/card/card.css";

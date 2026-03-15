@@ -1,5 +1,9 @@
 import CocktailDTO from "./CocktailDTO";
 
 export default interface ICocktailRepository {
-  getAll(): Promise<CocktailDTO[]>;
+  getAll(options?: {
+    offset?: number;
+    limit?: number;
+    paginate?: boolean;
+  }): Promise<{ cocktails: CocktailDTO[]; hasNext?: boolean }>;
 }

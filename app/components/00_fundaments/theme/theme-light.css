@@ -24,5 +24,7 @@
     --color-card-background: var(--color-neutral-black);
     --color-card-heading: var(--color-neutral-white);
     --color-card-text: var(--color-neutral-white);
+
+    --color-loader: var(--color-neutral-black);
   }
 }
