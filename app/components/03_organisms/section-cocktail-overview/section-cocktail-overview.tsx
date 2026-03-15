@@ -14,7 +14,7 @@ export default function SectionCocktailOverview() {
   const [cocktails, setCocktails] = useState<CocktailDTO[]>([]);
   const [hasNext, setHasNext] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-  const [page, setPage] = useState(1);
+  const [offset, setOffset] = useState(0);
 
   const limit = 10;
 
@@ -22,11 +22,11 @@ export default function SectionCocktailOverview() {
     setIsFetching(true);
 
     try {
-      const result = await CocktailService.instance.getPage(page, limit);
+      const result = await CocktailService.instance.getPage(offset, limit);
 
       setCocktails((prev) => [...prev, ...result.cocktails]);
       setHasNext(result.hasNext ?? false);
-      setPage((prev) => prev + 1);
+      setOffset((prev) => prev + limit);
     } catch (error) {
       console.error(error);
     } finally {

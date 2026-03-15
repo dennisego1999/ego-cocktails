@@ -11,27 +11,23 @@ export default class CocktailRepository implements ICocktailRepository {
   async getAll(options?: {
     offset?: number;
     limit?: number;
-    paginate?: boolean;
-  }): Promise<{ cocktails: CocktailDTO[]; hasNext?: boolean }> {
+  }): Promise<{ cocktails: CocktailDTO[]; hasNext: boolean }> {
     try {
-      const response = await this.client.getCocktails();
-      const allCocktails = response.map((data) => CocktailDTO.fromResponse(data));
-
-      // If pagination is disabled, return everything
-      if (options?.paginate === false) {
-        return { cocktails: allCocktails };
-      }
-
-      // Otherwise apply pagination
-      const offset = options?.offset ?? 0;
-      const limit = options?.limit ?? 10;
-      const paginated = allCocktails.slice(offset, offset + limit);
-      const hasNext = offset + limit < allCocktails.length;
+      const response = await this.client.getCocktails(options?.offset, options?.limit);
 
       return {
-        cocktails: paginated,
-        hasNext,
+        cocktails: response.cocktails.map((data) => CocktailDTO.fromResponse(data)),
+        hasNext: response.hasNext,
       };
+    } catch (e) {
+      throw new CocktailFetchError({ cause: e });
+    }
+  }
+
+  async getPopular(limit: number = 5): Promise<CocktailDTO[]> {
+    try {
+      const response = await this.client.getPopular(limit);
+      return response.map((data) => CocktailDTO.fromResponse(data));
     } catch (e) {
       throw new CocktailFetchError({ cause: e });
     }
