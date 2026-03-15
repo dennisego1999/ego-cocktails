@@ -2,6 +2,7 @@
 @import "./components/00_fundaments/misc/outline.css";
 @import "./components/00_fundaments/misc/border.css";
 @import "./components/00_fundaments/misc/visibility.css";
+@import "./components/00_fundaments/misc/aspect-ratio.css";
 @import "./components/00_fundaments/fonts/fonts.css";
 @import "./components/00_fundaments/color/color.css";
 @import "./components/00_fundaments/section/section.css";
@@ -22,6 +23,7 @@
 
 @import "./components/02_molecules/nav-menu/nav-menu.css";
 @import "./components/02_molecules/card/card.css";
+@import "./components/02_molecules/visual/visual.css";
 
 @import "./components/03_organisms/header/header.css";
 @import "./components/03_organisms/cocktail-list/cocktail-list.css";

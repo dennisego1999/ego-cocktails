@@ -1,0 +1,76 @@
+:root {
+  --aspect-ratio-panorama: 4;
+  --aspect-ratio-panorama-height: calc(100cqi / var(--aspect-ratio-panorama));
+  --aspect-ratio-letterbox: 2.35;
+  --aspect-ratio-letterbox-height: calc(100cqi / var(--aspect-ratio-letterbox));
+  --aspect-ratio-video: 1.7778;
+  --aspect-ratio-video-height: calc(100cqi / var(--aspect-ratio-video));
+  --aspect-ratio-landscape: 1.3333;
+  --aspect-ratio-landscape-height: calc(100cqi / var(--aspect-ratio-landscape));
+  --aspect-ratio-square: 1;
+  --aspect-ratio-square-height: 100cqi;
+  --aspect-ratio-portrait: 0.75;
+  --aspect-ratio-portrait-height: calc(100cqi / var(--aspect-ratio-portrait));
+  --aspect-ratio-skyscraper: 0.5625;
+  --aspect-ratio-skyscraper-height: calc(100cqi / var(--aspect-ratio-skyscraper));
+
+  --aspect-ratio: initial;
+  --aspect-ratio-height: auto;
+}
+
+@layer fundaments {
+  [data-aspect-ratio="auto"] {
+    --aspect-ratio: initial;
+    --aspect-ratio-height: auto;
+  }
+
+  [data-aspect-ratio="container"] {
+    --aspect-ratio: inherit;
+    --aspect-ratio-height: 100cqh;
+  }
+
+  [data-aspect-ratio="panorama"] {
+    --aspect-ratio: var(--aspect-ratio-video);
+    --aspect-ratio-height: var(--aspect-ratio-video-height);
+
+    @media (width >= 48rem) {
+      --aspect-ratio: var(--aspect-ratio-panorama);
+      --aspect-ratio-height: var(--aspect-ratio-panorama-height);
+    }
+  }
+
+  [data-aspect-ratio="letterbox"] {
+    --aspect-ratio: var(--aspect-ratio-landscape);
+    --aspect-ratio-height: var(--aspect-ratio-landscape-height);
+
+    @media (width >= 48rem) {
+      --aspect-ratio: var(--aspect-ratio-letterbox);
+      --aspect-ratio-height: var(--aspect-ratio-letterbox-height);
+    }
+  }
+
+  [data-aspect-ratio="video"] {
+    --aspect-ratio: var(--aspect-ratio-video);
+    --aspect-ratio-height: var(--aspect-ratio-video-height);
+  }
+
+  [data-aspect-ratio="landscape"] {
+    --aspect-ratio: var(--aspect-ratio-landscape);
+    --aspect-ratio-height: var(--aspect-ratio-landscape-height);
+  }
+
+  [data-aspect-ratio="square"] {
+    --aspect-ratio: var(--aspect-ratio-square);
+    --aspect-ratio-height: var(--aspect-ratio-square-height);
+  }
+
+  [data-aspect-ratio="portrait"] {
+    --aspect-ratio: var(--aspect-ratio-portrait);
+    --aspect-ratio-height: var(--aspect-ratio-portrait-height);
+  }
+
+  [data-aspect-ratio="skyscraper"] {
+    --aspect-ratio: var(--aspect-ratio-skyscraper);
+    --aspect-ratio-height: var(--aspect-ratio-skyscraper-height);
+  }
+}
