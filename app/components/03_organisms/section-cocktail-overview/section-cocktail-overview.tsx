@@ -58,12 +58,12 @@ export default function SectionCocktailOverview({
   }
 
   /**
-   * Search cocktails by name
+   * Search cocktails by name – combines local matches with API results.
    */
   async function performSearch(query: string | null): Promise<void> {
     if (!query) {
-      // Clear search: fetch first page of results
       setIsFetching(true);
+
       try {
         const result = await CocktailService.instance.getPage(0, limit);
         setPageResults(result.cocktails);
@@ -86,33 +86,37 @@ export default function SectionCocktailOverview({
 
     setSearchQuery(query);
 
-    // First check page results
+    // Local matches from already loaded cocktails
     const localMatches = pageResults.filter((cocktail) =>
       cocktail.name.toLowerCase().includes(query.toLowerCase()),
     );
 
-    if (localMatches.length > 0) {
-      setDisplayedResults(localMatches);
-      setIsSearchError(false);
-      return;
-    }
-
-    // No matches in local data => search
+    // Fetch from API to get all matching cocktails
     setIsFetching(true);
     setIsSearchError(false);
 
     try {
-      const results = await CocktailService.instance.search(query);
-      setDisplayedResults(results);
+      const apiResults = await CocktailService.instance.search(query);
+
+      // Combine local matches and API results, avoid duplicates (by name)
+      const combined = [...localMatches];
+      const localNames = new Set(localMatches.map((c) => c.name));
+      for (const apiCocktail of apiResults) {
+        if (!localNames.has(apiCocktail.name)) {
+          combined.push(apiCocktail);
+        }
+      }
+      setDisplayedResults(combined);
     } catch (error) {
       setIsSearchError(true);
-      setDisplayedResults([]);
 
       if (error instanceof CocktailSearchError) {
         console.error(error);
-      } else {
-        throw error;
+
+        return;
       }
+
+      throw error;
     } finally {
       setIsFetching(false);
     }
