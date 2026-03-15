@@ -20,5 +20,9 @@
     --color-button-text-disabled: var(--color-neutral-neutral-500);
     --color-button-border-disabled: var(--color-neutral-600);
     --color-button-background-disabled: var(--color-neutral-600);
+
+    --color-card-background: var(--color-neutral-black);
+    --color-card-heading: var(--color-neutral-white);
+    --color-card-text: var(--color-neutral-white);
   }
 }

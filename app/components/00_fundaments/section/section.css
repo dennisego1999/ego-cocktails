@@ -27,8 +27,11 @@
     padding-block-end: var(--section-padding-block-end);
     padding-inline-start: var(--section-gutter-left);
     padding-inline-end: var(--section-gutter-right);
-    background-color: var(--color-background);
     margin: 0;
+
+    &[data-theme] {
+      background-color: var(--color-background);
+    }
 
     @media (width >= 40rem) {
       --section-padding-tiny: 43px;

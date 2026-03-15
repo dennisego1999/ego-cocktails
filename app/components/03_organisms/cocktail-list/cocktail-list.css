@@ -1,0 +1,21 @@
+@layer organisms {
+  .cocktail-list {
+    --cols: 1;
+
+    display: grid;
+    grid-template-columns: repeat(var(--cols), 1fr);
+    gap: var(--section-gap);
+  }
+
+  @media (min-width: 40rem) {
+    .cocktail-list {
+      --cols: 2;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .cocktail-list {
+      --cols: 4;
+    }
+  }
+}

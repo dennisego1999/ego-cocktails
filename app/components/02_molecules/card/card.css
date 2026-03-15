@@ -1,0 +1,23 @@
+@layer molecules {
+  .card {
+    position: relative;
+    flex: 1;
+    background: var(--color-card-background);
+    padding: 1.2rem;
+    overflow: hidden;
+  }
+
+  .card__header,
+  .card__content,
+  .card__footer {
+    position: relative;
+
+    .heading {
+      --color-heading: var(--color-card-heading);
+    }
+
+    .text {
+      --color-text: var(--color-card-text);
+    }
+  }
+}

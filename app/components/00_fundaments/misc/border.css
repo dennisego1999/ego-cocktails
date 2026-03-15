@@ -1,0 +1,44 @@
+@layer fundaments {
+  :root {
+    --border-radius: 0;
+    --border-radius-tiny: 0.25rem;
+    --border-radius-small: 0.5rem;
+    --border-radius-medium: 1rem;
+    --border-radius-large: 2rem;
+    --border-radius-huge: 4rem;
+    --border-radius-pill: 100rem;
+    --border-radius-round: 50%;
+  }
+
+  [data-border-radius] {
+    border-radius: var(--border-radius);
+  }
+
+  [data-border-radius="tiny"] {
+    --border-radius: var(--border-radius-tiny);
+  }
+
+  [data-border-radius="small"] {
+    --border-radius: var(--border-radius-small);
+  }
+
+  [data-border-radius="medium"] {
+    --border-radius: var(--border-radius-medium);
+  }
+
+  [data-border-radius="large"] {
+    --border-radius: var(--border-radius-large);
+  }
+
+  [data-border-radius="huge"] {
+    --border-radius: var(--border-radius-huge);
+  }
+
+  [data-border-radius="pill"] {
+    --border-radius: var(--border-radius-pill);
+  }
+
+  [data-border-radius="round"] {
+    --border-radius: var(--border-radius-round);
+  }
+}
