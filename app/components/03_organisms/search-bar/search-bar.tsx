@@ -34,6 +34,18 @@ export default function SearchBar({
     onSubmit(inputValue || null);
   };
 
+  const handleClear = () => {
+    setInputValue("");
+
+    // Remove q param from URL
+    const params = new URLSearchParams(searchParams);
+    params.delete("q");
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+
+    // Trigger submit to parent with null query
+    onSubmit(null);
+  };
+
   return (
     <Form className="search-bar" onSubmit={handleSubmit}>
       <Section
@@ -55,6 +67,12 @@ export default function SearchBar({
         <Button type="submit" disabled={disabled}>
           Search
         </Button>
+
+        {inputValue && (
+          <Button type="button" onClick={handleClear} disabled={disabled} aria-label="Clear search">
+            Clear
+          </Button>
+        )}
       </Section>
     </Form>
   );
