@@ -16,7 +16,7 @@ export default function Section({
   className,
   children,
   role,
-  ...aria
+  ...rest
 }: SectionProps) {
   const Component = Tag as React.ElementType;
 
@@ -35,7 +35,7 @@ export default function Section({
       data-gap={gap}
       data-wrap={wrap}
       role={role}
-      {...aria}
+      {...rest}
     >
       {children}
     </Component>
