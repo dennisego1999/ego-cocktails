@@ -1,4 +1,3 @@
-// app/cocktails/page.tsx
 import CocktailService from "@/app/classes/cocktail/CocktailService";
 import SectionCocktailOverview from "../components/03_organisms/section-cocktail-overview/section-cocktail-overview";
 import CocktailDTO from "../classes/cocktail/CocktailDTO";
