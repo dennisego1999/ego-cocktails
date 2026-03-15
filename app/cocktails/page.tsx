@@ -18,7 +18,9 @@ export default async function CocktailsPage({
     // If search param exists, fetch search results directly
     const results = await CocktailService.instance.search(q);
     initialCocktails = results;
-    initialHasNext = false; // Search results aren't paginated
+
+    // Search results aren't paginated
+    initialHasNext = false;
   } else {
     // Normal paginated first page
     const initialData = await CocktailService.instance.getPage();
@@ -33,7 +35,7 @@ export default async function CocktailsPage({
     <SectionCocktailOverview
       initialCocktails={plainCocktails}
       initialHasNext={initialHasNext}
-      initialSearchQuery={q || null} // Pass the search query if any
+      initialSearchQuery={q}
     />
   );
 }
