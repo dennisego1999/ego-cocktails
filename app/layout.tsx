@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./lib/bootstrap.ts";
 import Header from "./components/03_organisms/header/header";
 import SkipLink from "./components/01_atoms/skip-link/skip-link";
 
