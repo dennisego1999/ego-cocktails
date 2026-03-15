@@ -18,6 +18,7 @@ import CocktailSearchError from "@/app/classes/cocktail/CocktailSearchError";
 export default function SectionCocktailOverview({
   initialCocktails,
   initialHasNext,
+  initialSearchQuery,
 }: SectionCocktailOverviewProps) {
   const searchParams = useSearchParams();
 
@@ -28,7 +29,7 @@ export default function SectionCocktailOverview({
   const [hasNext, setHasNext] = useState(initialHasNext);
   const [isFetching, setIsFetching] = useState(false);
   const [offset, setOffset] = useState(10); // Start at 10 since we already have first page
-  const [searchQuery, setSearchQuery] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string | null>(initialSearchQuery || null);
   const [isSearchError, setIsSearchError] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
 
@@ -58,7 +59,6 @@ export default function SectionCocktailOverview({
 
   /**
    * Search cocktails by name
-   * No debounce required since this isn't live searching onChange for example
    */
   async function performSearch(query: string | null): Promise<void> {
     if (!query) {
@@ -139,9 +139,7 @@ export default function SectionCocktailOverview({
 
       <SearchBar onSubmit={performSearch} disabled={isFetching} />
 
-      {displayedResults.length > 0 && (
-        <CocktailList cocktails={displayedResults} data-hidden={isInitializing} />
-      )}
+      {displayedResults.length > 0 && <CocktailList cocktails={displayedResults} />}
 
       {isSearchError && !isFetching && searchQuery && (
         <Error>Failed to find a cocktail for '{searchQuery}'</Error>

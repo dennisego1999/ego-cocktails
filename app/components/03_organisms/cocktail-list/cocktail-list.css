@@ -6,6 +6,7 @@
     grid-template-columns: repeat(var(--cols), 1fr);
     grid-auto-rows: 1fr;
     gap: var(--section-gap);
+    transition: opacity var(--transition-speed-slow);
   }
 
   @media (min-width: 40rem) {
