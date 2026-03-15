@@ -90,15 +90,19 @@ Errors are thrown as close to the problem as possible and caught as close to the
 
 ## Requirements
 
-Ensure you are using the correct Node.js version, then install dependencies:
+Ensure you are using the correct Node.js version by running the following command in the root of the repository:
 
 ```sh
-yarn
+nvm use
 ```
 
 ---
 
 ## Project Setup
+
+```sh
+yarn
+```
 
 ### Start Development Server
 
@@ -110,4 +114,10 @@ yarn dev
 
 ```sh
 yarn build
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+yarn lint
 ```
