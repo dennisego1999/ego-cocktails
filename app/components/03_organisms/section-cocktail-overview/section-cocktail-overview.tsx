@@ -62,10 +62,25 @@ export default function SectionCocktailOverview({
    */
   async function performSearch(query: string | null): Promise<void> {
     if (!query) {
-      // Clear search: show all loaded cocktails
-      setDisplayedResults(pageResults);
-      setIsSearchError(false);
-      setSearchQuery(null);
+      // Clear search: fetch first page of results
+      setIsFetching(true);
+      try {
+        const result = await CocktailService.instance.getPage(0, limit);
+        setPageResults(result.cocktails);
+        setDisplayedResults(result.cocktails);
+        setHasNext(result.hasNext ?? false);
+
+        // Reset offset to 10 for next load
+        setOffset(limit);
+
+        setIsSearchError(false);
+        setSearchQuery(null);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsFetching(false);
+      }
+
       return;
     }
 
@@ -119,7 +134,7 @@ export default function SectionCocktailOverview({
     }
 
     handleInitialLoad();
-  }, [pageResults]);
+  }, []); // Only run once after mounting
 
   return (
     <Section
