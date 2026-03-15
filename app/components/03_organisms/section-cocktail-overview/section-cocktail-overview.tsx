@@ -57,6 +57,7 @@ export default function SectionCocktailOverview({
 
   /**
    * Search cocktails by name
+   * No debounce required since this isn't live searching onChange for example
    */
   async function performSearch(query: string | null): Promise<void> {
     if (!query) {

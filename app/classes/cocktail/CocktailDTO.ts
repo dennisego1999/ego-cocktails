@@ -24,13 +24,13 @@ export default class CocktailDTO {
       data.name,
       data.glass,
       data.category ?? null,
-      data.popularity ?? null,
+      data.popularity,
       data.ingredients.map((i) => ({
         unit: i.unit ?? null,
         amount: i.amount ?? null,
         ingredient: i.ingredient ?? null,
         label: i.label ?? null,
-        special: i.special ?? undefined,
+        special: i.special ?? null,
       })),
       data.garnish ?? null,
       data.preparation ?? null,
@@ -50,26 +50,61 @@ export default class CocktailDTO {
   }
 
   private static isValid(data: unknown): data is ICocktail {
-    return (
-      typeof data === "object" &&
-      data !== null &&
-      typeof (data as ICocktail).name === "string" &&
-      typeof (data as ICocktail).glass === "string" &&
-      ((data as ICocktail).category === undefined ||
-        typeof (data as ICocktail).category === "string") &&
-      ((data as ICocktail).popularity === undefined ||
-        typeof (data as ICocktail).popularity === "number") &&
-      Array.isArray((data as ICocktail).ingredients) &&
-      (data as ICocktail).ingredients.every(
-        (i) =>
-          typeof i === "object" &&
-          i !== null &&
-          (i.special !== undefined || i.ingredient !== undefined),
-      ) &&
-      ((data as ICocktail).garnish === undefined ||
-        typeof (data as ICocktail).garnish === "string") &&
-      ((data as ICocktail).preparation === undefined ||
-        typeof (data as ICocktail).preparation === "string")
-    );
+    const cocktail = data as ICocktail;
+
+    // Required fields
+    if (
+      typeof data !== "object" ||
+      data === null ||
+      typeof cocktail.name !== "string" ||
+      typeof cocktail.glass !== "string" ||
+      typeof cocktail.popularity !== "number" ||
+      !Array.isArray(cocktail.ingredients)
+    ) {
+      return false;
+    }
+
+    // Check each ingredient is an object
+    for (const ingredient of cocktail.ingredients) {
+      if (typeof ingredient !== "object" || ingredient === null) return false;
+
+      // If optional fields exist, their types must be correct
+      if (
+        (ingredient.unit !== undefined &&
+          ingredient.unit !== null &&
+          typeof ingredient.unit !== "string") ||
+        (ingredient.amount !== undefined &&
+          ingredient.amount !== null &&
+          typeof ingredient.amount !== "number") ||
+        (ingredient.ingredient !== undefined &&
+          ingredient.ingredient !== null &&
+          typeof ingredient.ingredient !== "string") ||
+        (ingredient.label !== undefined &&
+          ingredient.label !== null &&
+          typeof ingredient.label !== "string") ||
+        (ingredient.special !== undefined &&
+          ingredient.special !== null &&
+          typeof ingredient.special !== "string")
+      ) {
+        return false;
+      }
+    }
+
+    // Optional cocktail fields - if they exist, must be strings
+    if (
+      (cocktail.category !== undefined &&
+        cocktail.category !== null &&
+        typeof cocktail.category !== "string") ||
+      (cocktail.garnish !== undefined &&
+        cocktail.garnish !== null &&
+        typeof cocktail.garnish !== "string") ||
+      (cocktail.preparation !== undefined &&
+        cocktail.preparation !== null &&
+        typeof cocktail.preparation !== "string")
+    ) {
+      return false;
+    }
+
+    return true;
   }
 }
