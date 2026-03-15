@@ -19,31 +19,26 @@ export default function SearchBar({
 
   const [inputValue, setInputValue] = useState(searchParams.get("q") || "");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // Update URL without reload
+  const updateUrlAndSubmit = (value: string | null) => {
     const params = new URLSearchParams(searchParams);
-    if (inputValue) {
-      params.set("q", inputValue);
+    if (value) {
+      params.set("q", value);
     } else {
       params.delete("q");
     }
 
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
-    onSubmit(inputValue || null);
+    onSubmit(value);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    updateUrlAndSubmit(inputValue || null);
   };
 
   const handleClear = () => {
     setInputValue("");
-
-    // Remove q param from URL
-    const params = new URLSearchParams(searchParams);
-    params.delete("q");
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
-
-    // Trigger submit to parent with null query
-    onSubmit(null);
+    updateUrlAndSubmit(null);
   };
 
   return (
