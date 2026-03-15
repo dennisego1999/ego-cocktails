@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { useState, useRef, useCallback, useEffect, FormEvent, ChangeEvent, useMemo } from "react";
+import { useState, useRef, useCallback, useEffect, useMemo, FormEvent, ChangeEvent } from "react";
 import debounce from "lodash/debounce";
 import Section from "../../00_fundaments/section/section";
 import InputField from "../../01_atoms/input-field/input-field";
@@ -45,10 +45,22 @@ export default function SearchBar({
     };
   }, [debouncedUpdate]);
 
+  // Restore focus after any URL change
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      inputRef.current?.focus();
+    }, 50);
+    return () => clearTimeout(timeoutId);
+  }, [searchParams]);
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     debouncedUpdate.cancel();
     updateUrlAndSubmit(inputValue || null);
+    // Immediate focus after explicit submit (Enter or button)
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 50);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -58,14 +70,12 @@ export default function SearchBar({
     if (newValue === "") {
       debouncedUpdate.cancel();
       updateUrlAndSubmit(null);
-    } else {
-      debouncedUpdate(newValue);
-    }
-  };
 
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, [searchParams]);
+      return;
+    }
+
+    debouncedUpdate(newValue);
+  };
 
   return (
     <Form className="search-bar" onSubmit={handleSubmit}>
