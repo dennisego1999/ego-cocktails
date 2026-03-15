@@ -36,9 +36,14 @@ export default function SearchBar({
     updateUrlAndSubmit(inputValue || null);
   };
 
-  const handleClear = () => {
-    setInputValue("");
-    updateUrlAndSubmit(null);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setInputValue(newValue);
+
+    // If input is cleared (native X button clicked), update URL immediately
+    if (newValue === "") {
+      updateUrlAndSubmit(null);
+    }
   };
 
   return (
@@ -54,20 +59,16 @@ export default function SearchBar({
           id="search"
           placeholder={placeholder}
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={handleInputChange}
           disabled={disabled}
           data-border-radius="small"
+          autoComplete="search"
+          type="search"
         />
 
         <Button type="submit" disabled={disabled}>
           Search
         </Button>
-
-        {inputValue && (
-          <Button type="button" onClick={handleClear} disabled={disabled} aria-label="Clear search">
-            Clear
-          </Button>
-        )}
       </Section>
     </Form>
   );
