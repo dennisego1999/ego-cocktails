@@ -12,8 +12,11 @@ app/
 │   ├── clients/
 │   │   └── HttpClient.ts
 │   ├── cocktail/
+│   │   ├── CocktailClient.ts
+│   │   ├── CocktailDTO.ts
 │   │   ├── CocktailFetchError.ts
 │   │   ├── CocktailRepository.ts
+│   │   ├── CocktailSearchError.ts
 │   │   ├── CocktailService.ts
 │   │   ├── ICocktail.ts
 │   │   ├── ICocktailClient.ts
@@ -85,6 +88,34 @@ The generic contracts know nothing about cocktails — they work for any API you
 ### Errors
 
 Errors are thrown as close to the problem as possible and caught as close to the user as possible — **throw early, catch late**.
+
+### Singleton Initialization in Next.js
+
+Next.js applications run in two separate environments: the **server** (during server‑side rendering) and the **client** (in the browser). A singleton `CocktailService` must be initialized in **both** environments, each with its own instance. This creates a subtle race condition: a client component may attempt to use the service before the client‑side initialization code has executed, leading to a `"CocktailService has not been initialized"` error.
+
+#### The Challenge
+
+- Modules imported **without** the `"use client"` directive are **excluded from the client bundle** – they run only on the server.
+- Therefore, the server‑side bootstrap (e.g., `import "./lib/bootstrap"` in the root layout) does **not** run in the browser.
+- A separate client‑side bootstrap file with `"use client"` is needed to initialize the service on the client.
+- Even with both bootstraps in place, the order in which client modules are evaluated can cause the bootstrap code to run **after** a component that depends on the service has already tried to access it.
+- The original service threw an error immediately if `instance` was accessed before `init()` was called, making the timing critical.
+
+#### The Solution
+
+1. **Dual Bootstraps**
+   - **Server bootstrap** (`app/lib/bootstrap.ts`): imported in the root layout (no `"use client"`), runs during SSR to initialize the server‑side singleton.
+   - **Client bootstrap** (`app/lib/client-bootstrap.ts` with `"use client"`): also imported in the layout, runs in the browser to initialize the client‑side singleton.  
+     This guarantees that each environment receives its own initialized instance.
+
+2. **Async‑Ready Service**  
+   The service was refactored to decouple the instance from the repository:
+   - The `instance` getter returns a service object **synchronously**, without requiring the repository.
+   - Every public method (`getPopular`, `getPage`, `search`) internally `await`s a promise that resolves when `init()` is called.
+   - If a method is called before the client bootstrap executes, it simply waits – no error is thrown.
+   - Once the bootstrap calls `init()`, the promise resolves and all pending method calls proceed normally.
+
+This design eliminates the race condition entirely. The service is now robust against the unpredictable order of execution between the client‑side bootstrap and component code. It works reliably on initial page load, client‑side navigation, and after any search or pagination interaction.
 
 ---
 

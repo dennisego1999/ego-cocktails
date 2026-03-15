@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "./lib/bootstrap.ts";
-import ClientBootstrap from "./lib/client-bootstrap";
+import "./lib/bootstrap";
+import "./lib/client-bootstap";
 import Header from "./components/03_organisms/header/header";
 import SkipLink from "./components/01_atoms/skip-link/skip-link";
 
@@ -18,8 +18,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ClientBootstrap />
-
         <SkipLink />
 
         <Header />

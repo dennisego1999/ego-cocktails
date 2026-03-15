@@ -3,24 +3,34 @@ import ICocktailRepository from "./ICocktailRepository";
 
 export default class CocktailService {
   private static _instance: CocktailService;
+  private static _repoPromise: Promise<ICocktailRepository> | null = null;
+  private static _resolveRepo: ((repo: ICocktailRepository) => void) | null = null;
 
-  private constructor(private repo: ICocktailRepository) {
-    //
+  private constructor() {} // no repo stored in instance
+
+  public static init(repo: ICocktailRepository): void {
+    if (this._resolveRepo) {
+      this._resolveRepo(repo);
+
+      return;
+    }
+
+    this._repoPromise = Promise.resolve(repo);
+  }
+
+  private static async getRepo(): Promise<ICocktailRepository> {
+    if (!this._repoPromise) {
+      this._repoPromise = new Promise((resolve) => {
+        this._resolveRepo = resolve;
+      });
+    }
+    return this._repoPromise;
   }
 
   public static get instance(): CocktailService {
     if (!this._instance) {
-      throw new Error("CocktailService has not been initialized. Call init() first.");
+      this._instance = new CocktailService();
     }
-
-    return this._instance;
-  }
-
-  public static init(repo: ICocktailRepository): CocktailService {
-    if (!this._instance) {
-      this._instance = new CocktailService(repo);
-    }
-
     return this._instance;
   }
 
@@ -29,7 +39,8 @@ export default class CocktailService {
    * @param limit - Number of cocktails to return (default: 5)
    */
   public async getPopular(limit: number = 5): Promise<CocktailDTO[]> {
-    return this.repo.getPopular(limit);
+    const repo = await CocktailService.getRepo();
+    return repo.getPopular(limit);
   }
 
   /**
@@ -38,7 +49,8 @@ export default class CocktailService {
    * @param limit - Number of items to return (default: 10)
    */
   public async getPage(offset: number = 0, limit: number = 10) {
-    return this.repo.getAll({ offset, limit });
+    const repo = await CocktailService.getRepo();
+    return repo.getAll({ offset, limit });
   }
 
   /**
@@ -47,6 +59,7 @@ export default class CocktailService {
    * @returns Promise resolving to array of matching cocktail DTOs
    */
   public async search(query: string): Promise<CocktailDTO[]> {
-    return this.repo.search(query);
+    const repo = await CocktailService.getRepo();
+    return repo.search(query);
   }
 }
