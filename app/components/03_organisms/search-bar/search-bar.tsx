@@ -3,10 +3,9 @@
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import Section from "../../00_fundaments/section/section";
 import InputField from "../../01_atoms/input-field/input-field";
-import Button from "../../01_atoms/button/button";
 import SearchBarProps from "./search-bar-props";
 import Form from "../../01_atoms/form/form";
-import { useState } from "react";
+import { useState, useRef, FormEvent, ChangeEvent } from "react";
 
 export default function SearchBar({
   onSubmit,
@@ -17,7 +16,9 @@ export default function SearchBar({
   const router = useRouter();
   const pathname = usePathname();
 
+  const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState(searchParams.get("q") || "");
+  const searchDebounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const updateUrlAndSubmit = (value: string | null) => {
     const params = new URLSearchParams(searchParams);
@@ -29,33 +30,48 @@ export default function SearchBar({
 
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
     onSubmit(value);
+
+    // Ensure input field stays focused
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (searchDebounceTimeout.current) {
+      clearTimeout(searchDebounceTimeout.current);
+      searchDebounceTimeout.current = null;
+    }
     updateUrlAndSubmit(inputValue || null);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setInputValue(newValue);
 
-    // If input is cleared (native X button clicked), update URL immediately
     if (newValue === "") {
+      if (searchDebounceTimeout.current) {
+        clearTimeout(searchDebounceTimeout.current);
+        searchDebounceTimeout.current = null;
+      }
       updateUrlAndSubmit(null);
+      return;
     }
+
+    if (searchDebounceTimeout.current) {
+      clearTimeout(searchDebounceTimeout.current);
+    }
+    searchDebounceTimeout.current = setTimeout(() => {
+      updateUrlAndSubmit(newValue);
+    }, 300);
   };
 
   return (
     <Form className="search-bar" onSubmit={handleSubmit}>
-      <Section
-        className="search-bar__inner"
-        flexDirection="row"
-        justify="between"
-        align="center"
-        gap="tiny"
-      >
+      <Section className="search-bar__inner" flexDirection="row" align="center" gap="tiny">
         <InputField
+          ref={inputRef}
           id="search"
           placeholder={placeholder}
           value={inputValue}
@@ -65,10 +81,6 @@ export default function SearchBar({
           autoComplete="search"
           type="search"
         />
-
-        <Button type="submit" disabled={disabled}>
-          Search
-        </Button>
       </Section>
     </Form>
   );
