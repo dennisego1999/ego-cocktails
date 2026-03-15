@@ -4,7 +4,7 @@
     --color-heading: var(--color-neutral-black);
     --color-text: var(--color-neutral-black);
     --color-accent: var(--color-neutral-500);
-    --color-outline: var(--color-neutral-red);
+    --color-outline: var(--color-neutral-yellow);
 
     --color-link: var(--color-text);
     --color-link-hover: var(--color-neutral-700);
@@ -26,5 +26,7 @@
     --color-card-text: var(--color-neutral-white);
 
     --color-loader: var(--color-neutral-black);
+
+    --color-input-field-border: var(--color-neutral-black);
   }
 }

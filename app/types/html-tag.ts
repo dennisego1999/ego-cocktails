@@ -1,5 +1,6 @@
 export type HTMLTag =
   | "div"
+  | "form"
   | "span"
   | "p"
   | "h1"

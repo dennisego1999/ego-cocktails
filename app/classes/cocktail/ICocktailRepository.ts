@@ -7,4 +7,5 @@ export default interface ICocktailRepository {
     paginate?: boolean;
   }): Promise<{ cocktails: CocktailDTO[]; hasNext?: boolean }>;
   getPopular(limit?: number): Promise<CocktailDTO[]>;
+  search(query: string): Promise<CocktailDTO[]>;
 }

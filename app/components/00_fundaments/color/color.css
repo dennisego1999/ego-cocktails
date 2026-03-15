@@ -52,6 +52,10 @@
       var(--color-neutral-white) 5%
     );
     --color-neutral-black: #000000;
-    --color-neutral-red: #ff3b30;
+    --color-neutral-yellow: #faef1c;
+
+    --color-indication-valid: green;
+    --color-indication-warning: orange;
+    --color-indication-invalid: red;
   }
 }

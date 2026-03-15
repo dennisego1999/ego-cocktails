@@ -1,0 +1,5 @@
+@layer atoms {
+  form.form {
+    flex: 1;
+  }
+}

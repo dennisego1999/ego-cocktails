@@ -7,10 +7,13 @@
 @import "./components/00_fundaments/theme/theme-light.css";
 @import "./components/00_fundaments/theme/theme-dark.css";
 
+@import "./components/01_atoms/error/error.css";
+@import "./components/01_atoms/form/form.css";
 @import "./components/01_atoms/link/link.css";
 @import "./components/01_atoms/text/text.css";
 @import "./components/01_atoms/heading/heading.css";
 @import "./components/01_atoms/logo/logo.css";
+@import "./components/01_atoms/input-field/input-field.css";
 @import "./components/01_atoms/hamburger/hamburger.css";
 @import "./components/01_atoms/button/button.css";
 @import "./components/01_atoms/skip-link/skip-link.css";

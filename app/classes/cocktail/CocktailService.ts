@@ -40,4 +40,13 @@ export default class CocktailService {
   public async getPage(offset: number = 0, limit: number = 10) {
     return this.repo.getAll({ offset, limit });
   }
+
+  /**
+   * Searches for cocktails by name
+   * @param query - Search term to match against cocktail names
+   * @returns Promise resolving to array of matching cocktail DTOs
+   */
+  public async search(query: string): Promise<CocktailDTO[]> {
+    return this.repo.search(query);
+  }
 }

@@ -1,0 +1,6 @@
+@layer atoms {
+  .error {
+    --text-font-weight: bold;
+    --color-text: var(--color-indication-invalid);
+  }
+}
