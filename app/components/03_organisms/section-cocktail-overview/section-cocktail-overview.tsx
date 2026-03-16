@@ -156,7 +156,7 @@ export default function SectionCocktailOverview({
         into one scrollable fever dream.
       </Text>
 
-      <SearchBar onSubmit={performSearch} disabled={isFetching} />
+      <SearchBar placeholder="Find a cocktail" onSubmit={performSearch} disabled={isFetching} />
 
       {displayedResults.length > 0 && <CocktailList cocktails={displayedResults} />}
 

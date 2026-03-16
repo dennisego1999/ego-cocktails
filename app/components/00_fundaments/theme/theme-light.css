@@ -28,5 +28,9 @@
     --color-loader: var(--color-neutral-black);
 
     --color-input-field-border: var(--color-neutral-black);
+
+    --color-clickable-list-background: var(--color-neutral-white);
+    --color-clickable-list-background-hover: var(--color-neutral-100);
+    --color-clickable-list-border: var(--color-neutral-300);
   }
 }

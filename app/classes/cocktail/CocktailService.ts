@@ -1,5 +1,6 @@
 import CocktailDTO from "./CocktailDTO";
 import ICocktailRepository from "./ICocktailRepository";
+import ICocktailSuggestion from "./ICocktailSuggestion";
 
 export default class CocktailService {
   private static _instance: CocktailService;
@@ -63,7 +64,7 @@ export default class CocktailService {
     return repo.search(query);
   }
 
-  public async getSuggestions(query: string): Promise<Array<{ name: string }>> {
+  public async getSuggestions(query: string): Promise<Array<ICocktailSuggestion>> {
     if (query === "") {
       return [];
     }

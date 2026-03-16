@@ -18,4 +18,8 @@
   .input-field[type="search"]::-webkit-search-cancel-button {
     cursor: pointer;
   }
+
+  &::placeholder {
+    color: var(--color-text);
+  }
 }
