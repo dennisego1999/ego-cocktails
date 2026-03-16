@@ -137,8 +137,7 @@ export default function SectionCocktailOverview({
       <Heading>All cocktails</Heading>
 
       <Text>
-        Every. Single. One. From the classic to the experimental, here's every cocktail ever mixed
-        into one scrollable fever dream.
+        All the drinks. Every. Single. One. From sophisticated sips to questionable concoctions.
       </Text>
 
       <SearchBar placeholder="Find a cocktail" onSubmit={performSearch} disabled={isFetching} />
