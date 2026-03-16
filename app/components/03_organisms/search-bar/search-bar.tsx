@@ -144,6 +144,25 @@ export default function SearchBar({ onSubmit, disabled, placeholder }: SearchBar
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Close suggestions when focus leaves the list to somewhere outside
+  useEffect(() => {
+    const list = suggestionListRef.current;
+    if (!list || !showSuggestions) return;
+
+    const handleFocusOut = (e: FocusEvent) => {
+      // Use setTimeout to allow the next focus to settle
+      setTimeout(() => {
+        const focusedElement = document.activeElement;
+        if (!list.contains(focusedElement) && !inputRef.current?.contains(focusedElement)) {
+          setShowSuggestions(false);
+        }
+      }, 0);
+    };
+
+    list.addEventListener("focusout", handleFocusOut);
+    return () => list.removeEventListener("focusout", handleFocusOut);
+  }, [showSuggestions]);
+
   return (
     <Form className="search-bar" onSubmit={handleSubmit}>
       <Section className="search-bar__inner" flexDirection="row" align="center" gap="tiny">
