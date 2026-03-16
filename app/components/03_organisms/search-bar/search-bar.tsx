@@ -26,9 +26,6 @@ export default function SearchBar({ onSubmit, disabled, placeholder }: SearchBar
   const [suggestions, setSuggestions] = useState<Array<ICocktailSuggestion>>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  // Prevents suggestions from reappearing immediately after a selection
-  const justSelected = useRef(false);
-
   // Memoized function to focus input and place cursor at the end
   const focusInputEnd = useCallback(() => {
     const input = inputRef.current;
@@ -85,9 +82,7 @@ export default function SearchBar({ onSubmit, disabled, placeholder }: SearchBar
       try {
         const results = await CocktailService.instance.getSuggestions(inputValue);
         setSuggestions(results);
-
-        // Show suggestions only if we haven't just selected one and there are results
-        setShowSuggestions(!justSelected.current && results.length > 0);
+        setShowSuggestions(true);
       } catch (error) {
         console.error("Suggestions error", error);
         setSuggestions([]);
@@ -113,9 +108,6 @@ export default function SearchBar({ onSubmit, disabled, placeholder }: SearchBar
     const newValue = e.target.value;
     setInputValue(newValue);
 
-    // User is typing, so allow suggestions again
-    justSelected.current = false;
-
     if (newValue === "") {
       debouncedUpdate.cancel();
 
@@ -132,9 +124,6 @@ export default function SearchBar({ onSubmit, disabled, placeholder }: SearchBar
   const handleSuggestionClick = (name: string) => {
     setInputValue(name);
     setShowSuggestions(false);
-
-    // Mark that a suggestion was selected to prevent immediate re‑open
-    justSelected.current = true;
 
     // Cancel any pending search
     debouncedUpdate.cancel();
