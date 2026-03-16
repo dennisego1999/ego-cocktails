@@ -58,7 +58,7 @@ export default function SectionCocktailOverview({
   }
 
   /**
-   * Search cocktails by name – combines local matches with API results.
+   * Search cocktails by name
    */
   async function performSearch(query: string | null): Promise<void> {
     if (!query) {
@@ -84,29 +84,14 @@ export default function SectionCocktailOverview({
       return;
     }
 
-    setSearchQuery(query);
-
-    // Local matches from already loaded cocktails
-    const localMatches = pageResults.filter((cocktail) =>
-      cocktail.name.toLowerCase().includes(query.toLowerCase()),
-    );
-
-    // Fetch from API to get all matching cocktails
     setIsFetching(true);
     setIsSearchError(false);
 
-    try {
-      const apiResults = await CocktailService.instance.search(query);
+    setSearchQuery(query);
 
-      // Combine local matches and API results, avoid duplicates (by name)
-      const combined = [...localMatches];
-      const localNames = new Set(localMatches.map((c) => c.name));
-      for (const apiCocktail of apiResults) {
-        if (!localNames.has(apiCocktail.name)) {
-          combined.push(apiCocktail);
-        }
-      }
-      setDisplayedResults(combined);
+    try {
+      const searchResults = await CocktailService.instance.search(query);
+      setDisplayedResults(searchResults);
     } catch (error) {
       setIsSearchError(true);
 
