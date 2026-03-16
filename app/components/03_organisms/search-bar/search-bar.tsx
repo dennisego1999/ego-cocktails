@@ -82,7 +82,7 @@ export default function SearchBar({ onSubmit, disabled, placeholder }: SearchBar
       try {
         const results = await CocktailService.instance.getSuggestions(inputValue);
         setSuggestions(results);
-        setShowSuggestions(true);
+        setShowSuggestions(results.length !== 1);
       } catch (error) {
         console.error("Suggestions error", error);
         setSuggestions([]);
