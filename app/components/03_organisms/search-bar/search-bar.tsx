@@ -7,18 +7,22 @@ import Section from "../../00_fundaments/section/section";
 import InputField from "../../01_atoms/input-field/input-field";
 import SearchBarProps from "./search-bar-props";
 import Form from "../../01_atoms/form/form";
+import ClickableList from "../../02_molecules/clickable-list/clickable-list";
+import CocktailService from "@/app/classes/cocktail/CocktailService";
 
-export default function SearchBar({
-  onSubmit,
-  disabled = false,
-  placeholder = "Search cocktails...",
-}: SearchBarProps) {
+const SUGGESTION_MIN_LENGTH = 1;
+
+export default function SearchBar({ onSubmit, disabled, placeholder }: SearchBarProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const suggestionListRef = useRef<HTMLUListElement>(null);
   const [inputValue, setInputValue] = useState(searchParams.get("q") || "");
+  const [suggestions, setSuggestions] = useState<Array<{ name: string }>>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const justSelected = useRef(false);
 
   const updateUrlAndSubmit = useCallback(
     (value: string | null) => {
@@ -40,12 +44,40 @@ export default function SearchBar({
   );
 
   useEffect(() => {
-    return () => {
-      debouncedUpdate.cancel();
-    };
+    return () => debouncedUpdate.cancel();
   }, [debouncedUpdate]);
 
-  // Restore focus after any URL change
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (inputValue.length < SUGGESTION_MIN_LENGTH) {
+        setSuggestions([]);
+        setShowSuggestions(false);
+        return;
+      }
+
+      try {
+        const results = await CocktailService.instance.getSuggestions(inputValue);
+        setSuggestions(results);
+
+        // Only show if we haven't just selected a suggestion
+        if (!justSelected.current && results.length > 0) {
+          setShowSuggestions(true);
+
+          return;
+        }
+
+        setShowSuggestions(false);
+      } catch (error) {
+        console.error("Suggestions error", error);
+        setSuggestions([]);
+        setShowSuggestions(false);
+      }
+    };
+
+    const timer = setTimeout(fetchSuggestions, 150);
+    return () => clearTimeout(timer);
+  }, [inputValue]);
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       inputRef.current?.focus();
@@ -57,25 +89,44 @@ export default function SearchBar({
     e.preventDefault();
     debouncedUpdate.cancel();
     updateUrlAndSubmit(inputValue || null);
-    // Immediate focus after explicit submit (Enter or button)
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 50);
+    setTimeout(() => inputRef.current?.focus(), 50);
+    setShowSuggestions(false);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setInputValue(newValue);
+    justSelected.current = false;
 
     if (newValue === "") {
       debouncedUpdate.cancel();
       updateUrlAndSubmit(null);
-
       return;
     }
 
     debouncedUpdate(newValue);
   };
+
+  const handleSuggestionClick = (name: string) => {
+    setInputValue(name);
+    setShowSuggestions(false);
+    justSelected.current = true;
+    debouncedUpdate.cancel();
+    updateUrlAndSubmit(name);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as Node;
+      const isClickInside =
+        inputRef.current?.contains(target) || suggestionListRef.current?.contains(target);
+      if (!isClickInside) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <Form className="search-bar" onSubmit={handleSubmit}>
@@ -91,6 +142,16 @@ export default function SearchBar({
           autoComplete="search"
           type="search"
         />
+
+        {showSuggestions && (
+          <ClickableList
+            ref={suggestionListRef}
+            items={suggestions}
+            renderItem={(item) => item.name}
+            onItemClick={(item) => handleSuggestionClick(item.name)}
+            keyExtractor={(item) => item.name}
+          />
+        )}
       </Section>
     </Form>
   );

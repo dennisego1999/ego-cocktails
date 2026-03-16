@@ -38,4 +38,8 @@ export default class CocktailClient extends HttpClient implements ICocktailClien
     const params = new URLSearchParams({ q: query });
     return this.get<ICocktail[]>(`cocktails/search?${params}`);
   }
+
+  async getAllCocktails(): Promise<ICocktail[]> {
+    return this.get<ICocktail[]>("cocktails");
+  }
 }

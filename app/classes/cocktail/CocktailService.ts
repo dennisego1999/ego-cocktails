@@ -62,4 +62,18 @@ export default class CocktailService {
     const repo = await CocktailService.getRepo();
     return repo.search(query);
   }
+
+  public async getSuggestions(query: string): Promise<Array<{ name: string }>> {
+    if (query === "") {
+      return [];
+    }
+
+    const repo = await CocktailService.getRepo();
+    const allCocktails = await repo.getAllCocktails();
+
+    return allCocktails
+      .filter((c) => c.name.toLowerCase().includes(query.toLowerCase()))
+      .slice(0, 5)
+      .map((c) => ({ name: c.name }));
+  }
 }

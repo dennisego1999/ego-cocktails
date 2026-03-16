@@ -5,8 +5,7 @@ export default interface ICocktailClient {
     offset?: number,
     limit?: number,
   ): Promise<{ cocktails: ICocktail[]; hasNext: boolean }>;
-
   getPopular(limit?: number): Promise<ICocktail[]>;
-
   search(query: string): Promise<ICocktail[]>;
+  getAllCocktails(): Promise<ICocktail[]>;
 }

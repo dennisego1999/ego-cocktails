@@ -42,4 +42,13 @@ export default class CocktailRepository implements ICocktailRepository {
       throw new CocktailSearchError(query);
     }
   }
+
+  async getAllCocktails(): Promise<CocktailDTO[]> {
+    try {
+      const response = await this.client.getAllCocktails();
+      return response.map((data) => CocktailDTO.fromResponse(data));
+    } catch (e) {
+      throw new CocktailFetchError({ cause: e });
+    }
+  }
 }
