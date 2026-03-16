@@ -10,10 +10,10 @@ import Text from "../../01_atoms/text/text";
 import CocktailList from "../cocktail-list/cocktail-list";
 import Button from "../../01_atoms/button/button";
 import Loader from "../../01_atoms/loader/loader";
-import SearchBar from "../search-bar/search-bar";
 import Error from "../../01_atoms/error/error";
 import SectionCocktailOverviewProps from "./section-cocktail-overview-props";
 import CocktailSearchError from "@/app/classes/cocktail/CocktailSearchError";
+import CocktailSearchBar from "../cocktail-search-bar/cocktail-search-bar";
 
 export default function SectionCocktailOverview({
   initialCocktails,
@@ -140,7 +140,11 @@ export default function SectionCocktailOverview({
         All the drinks. Every. Single. One. From sophisticated sips to questionable concoctions.
       </Text>
 
-      <SearchBar placeholder="Find a cocktail" onSubmit={performSearch} disabled={isFetching} />
+      <CocktailSearchBar
+        placeholder="Find a cocktail"
+        onSubmit={performSearch}
+        disabled={isFetching}
+      />
 
       {displayedResults.length > 0 && <CocktailList cocktails={displayedResults} />}
 

@@ -27,7 +27,7 @@
 @import "./components/02_molecules/clickable-list/clickable-list.css";
 
 @import "./components/03_organisms/header/header.css";
-@import "./components/03_organisms/search-bar/search-bar.css";
+@import "./components/03_organisms/cocktail-search-bar/cocktail-search-bar.css";
 @import "./components/03_organisms/cocktail-list/cocktail-list.css";
 @import "./components/03_organisms/popover-menu/popover-menu.css";
 

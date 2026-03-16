@@ -5,17 +5,21 @@ import { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import debounce from "lodash/debounce";
 import Section from "../../00_fundaments/section/section";
 import InputField from "../../01_atoms/input-field/input-field";
-import SearchBarProps from "./search-bar-props";
 import Form from "../../01_atoms/form/form";
 import ClickableList from "../../02_molecules/clickable-list/clickable-list";
 import CocktailService from "@/app/classes/cocktail/CocktailService";
 import ICocktailSuggestion from "@/app/classes/cocktail/ICocktailSuggestion";
+import CocktailSearchBarProps from "./cocktail-search-bar-props";
 
 const SUGGESTION_MIN_LENGTH = 1;
 const SUGGESTION_DEBOUNCE = 150;
 const FOCUS_DELAY = 50;
 
-export default function SearchBar({ onSubmit, disabled, placeholder }: SearchBarProps) {
+export default function CocktailSearchBar({
+  onSubmit,
+  disabled,
+  placeholder,
+}: CocktailSearchBarProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -164,8 +168,8 @@ export default function SearchBar({ onSubmit, disabled, placeholder }: SearchBar
   }, [showSuggestions]);
 
   return (
-    <Form className="search-bar" onSubmit={handleSubmit}>
-      <Section className="search-bar__inner" flexDirection="row" align="center" gap="tiny">
+    <Form className="cocktail-search-bar" onSubmit={handleSubmit}>
+      <Section className="cocktail-search-bar__inner" flexDirection="row" align="center" gap="tiny">
         <InputField
           ref={inputRef}
           id="search"
