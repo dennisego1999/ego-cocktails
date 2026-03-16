@@ -9,12 +9,12 @@ export default class CocktailRepository implements ICocktailRepository {
     //
   }
 
-  async getAll(options?: {
+  async getPage(options?: {
     offset?: number;
     limit?: number;
   }): Promise<{ cocktails: CocktailDTO[]; hasNext: boolean }> {
     try {
-      const response = await this.client.getCocktails(options?.offset, options?.limit);
+      const response = await this.client.getPage(options?.offset, options?.limit);
 
       return {
         cocktails: response.cocktails.map((data) => CocktailDTO.fromResponse(data)),
@@ -43,9 +43,9 @@ export default class CocktailRepository implements ICocktailRepository {
     }
   }
 
-  async getAllCocktails(): Promise<CocktailDTO[]> {
+  async getAll(): Promise<CocktailDTO[]> {
     try {
-      const response = await this.client.getAllCocktails();
+      const response = await this.client.getAll();
       return response.map((data) => CocktailDTO.fromResponse(data));
     } catch (e) {
       throw new CocktailFetchError({ cause: e });

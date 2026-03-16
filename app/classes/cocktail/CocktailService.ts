@@ -51,7 +51,7 @@ export default class CocktailService {
    */
   public async getPage(offset: number = 0, limit: number = 10) {
     const repo = await CocktailService.getRepo();
-    return repo.getAll({ offset, limit });
+    return repo.getPage({ offset, limit });
   }
 
   /**
@@ -70,7 +70,7 @@ export default class CocktailService {
     }
 
     const repo = await CocktailService.getRepo();
-    const allCocktails = await repo.getAllCocktails();
+    const allCocktails = await repo.getAll();
 
     return allCocktails
       .filter((c) => c.name.toLowerCase().includes(query.toLowerCase()))

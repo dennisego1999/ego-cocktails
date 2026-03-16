@@ -1,11 +1,8 @@
 import ICocktail from "./ICocktail";
 
 export default interface ICocktailClient {
-  getCocktails(
-    offset?: number,
-    limit?: number,
-  ): Promise<{ cocktails: ICocktail[]; hasNext: boolean }>;
+  getPage(offset?: number, limit?: number): Promise<{ cocktails: ICocktail[]; hasNext: boolean }>;
   getPopular(limit?: number): Promise<ICocktail[]>;
   search(query: string): Promise<ICocktail[]>;
-  getAllCocktails(): Promise<ICocktail[]>;
+  getAll(): Promise<ICocktail[]>;
 }

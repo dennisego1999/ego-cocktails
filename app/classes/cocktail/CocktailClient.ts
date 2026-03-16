@@ -7,7 +7,7 @@ export default class CocktailClient extends HttpClient implements ICocktailClien
     super("http://localhost:3000/api/");
   }
 
-  async getCocktails(
+  async getPage(
     offset?: number,
     limit?: number,
   ): Promise<{ cocktails: ICocktail[]; hasNext: boolean }> {
@@ -39,7 +39,7 @@ export default class CocktailClient extends HttpClient implements ICocktailClien
     return this.get<ICocktail[]>(`cocktails/search?${params}`);
   }
 
-  async getAllCocktails(): Promise<ICocktail[]> {
+  async getAll(): Promise<ICocktail[]> {
     return this.get<ICocktail[]>("cocktails");
   }
 }
