@@ -22,6 +22,7 @@ app/
 │   │   ├── ICocktailClient.ts
 │   │   ├── ICocktailIngredient.ts
 │   │   ├── ICocktailRepository.ts
+│   │   ├── ICocktailSuggestion.ts
 │   │   └── InvalidCocktailError.ts
 │   └── errors/
 │       └── HttpError.ts
