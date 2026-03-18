@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <Section>
       <Visual
-        data-aspect-ratio="letterbox"
+        data-aspect-ratio="panorama"
         src="/images/cocktails.jpg"
         alt="Interior of a cocktail bar"
       />
