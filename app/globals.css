@@ -61,5 +61,7 @@ main {
 
 ul,
 ol {
-  padding: 0;
+  &:not(.section) {
+    padding: 0;
+  }
 }
