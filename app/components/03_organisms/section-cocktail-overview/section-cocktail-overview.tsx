@@ -73,6 +73,7 @@ export default function SectionCocktailOverview({
         } finally {
           setIsFetching(false);
         }
+
         return;
       }
 
