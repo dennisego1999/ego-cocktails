@@ -19,17 +19,16 @@ export default function SectionCocktailOverview({
   initialHasNext,
   initialSearchQuery,
 }: SectionCocktailOverviewProps) {
+  const limit = 10;
   const [displayedResults, setDisplayedResults] = useState<CocktailDTO[]>(initialCocktails);
   const [hasNext, setHasNext] = useState(initialHasNext);
   const [isFetching, setIsFetching] = useState(false);
 
   // Start at 10 because first page is fetched server‑side
-  const [offset, setOffset] = useState(10);
+  const [offset, setOffset] = useState(limit);
 
   const [searchQuery, setSearchQuery] = useState<string | null>(initialSearchQuery || null);
   const [isSearchError, setIsSearchError] = useState(false);
-
-  const limit = 10;
 
   /** Load next page of cocktails */
   const fetchCocktailPage = useCallback(async () => {
