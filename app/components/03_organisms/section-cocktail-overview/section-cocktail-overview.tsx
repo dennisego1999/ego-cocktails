@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState, useCallback } from "react";
 import CocktailService from "@/app/classes/cocktail/CocktailService";
 import CocktailDTO from "@/app/classes/cocktail/CocktailDTO";
 import Section from "../../00_fundaments/section/section";
@@ -20,34 +19,26 @@ export default function SectionCocktailOverview({
   initialHasNext,
   initialSearchQuery,
 }: SectionCocktailOverviewProps) {
-  const searchParams = useSearchParams();
-
-  // Two result arrays initialized with server-fetched data
-  const [pageResults, setPageResults] = useState<CocktailDTO[]>(initialCocktails);
   const [displayedResults, setDisplayedResults] = useState<CocktailDTO[]>(initialCocktails);
-
   const [hasNext, setHasNext] = useState(initialHasNext);
   const [isFetching, setIsFetching] = useState(false);
-  const [offset, setOffset] = useState(10); // Start at 10 since we already have first page
+
+  // Start at 10 because first page is fetched server‑side
+  const [offset, setOffset] = useState(10);
+
   const [searchQuery, setSearchQuery] = useState<string | null>(initialSearchQuery || null);
   const [isSearchError, setIsSearchError] = useState(false);
-  const [isInitializing, setIsInitializing] = useState(true);
 
   const limit = 10;
 
   /** Load next page of cocktails */
-  async function fetchCocktailPage(): Promise<void> {
+  const fetchCocktailPage = useCallback(async () => {
     setIsFetching(true);
 
     try {
       const result = await CocktailService.instance.getPage(offset, limit);
 
-      // Add new cocktails to page results list
-      setPageResults((prev) => [...prev, ...result.cocktails]);
-
-      // Add the new cocktails to the display results
       setDisplayedResults((prev) => [...prev, ...result.cocktails]);
-
       setHasNext(result.hasNext ?? false);
       setOffset((prev) => prev + limit);
     } catch (error) {
@@ -55,75 +46,59 @@ export default function SectionCocktailOverview({
     } finally {
       setIsFetching(false);
     }
-  }
+  }, [offset, limit]);
 
   /**
    * Search cocktails by name
+   * This is called by the search bar whenever a search should happen.
    */
-  async function performSearch(query: string | null): Promise<void> {
-    if (!query) {
-      setIsFetching(true);
+  const performSearch = useCallback(
+    async (query: string | null) => {
+      if (!query) {
+        setIsFetching(true);
 
-      try {
-        const result = await CocktailService.instance.getPage(0, limit);
-        setPageResults(result.cocktails);
-        setDisplayedResults(result.cocktails);
-        setHasNext(result.hasNext ?? false);
+        try {
+          const result = await CocktailService.instance.getPage(0, limit);
 
-        // Reset offset to 10 for next load
-        setOffset(limit);
+          setDisplayedResults(result.cocktails);
+          setHasNext(result.hasNext ?? false);
 
-        setIsSearchError(false);
-        setSearchQuery(null);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsFetching(false);
-      }
+          // Next page offset = limit
+          setOffset(limit);
 
-      return;
-    }
-
-    setIsFetching(true);
-    setIsSearchError(false);
-
-    setSearchQuery(query);
-
-    try {
-      const searchResults = await CocktailService.instance.search(query);
-      setDisplayedResults(searchResults);
-    } catch (error) {
-      setIsSearchError(true);
-
-      if (error instanceof CocktailSearchError) {
-        console.error(error);
-
+          setIsSearchError(false);
+          setSearchQuery(null);
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setIsFetching(false);
+        }
         return;
       }
 
-      throw error;
-    } finally {
-      setIsFetching(false);
-    }
-  }
+      setIsFetching(true);
+      setIsSearchError(false);
+      setSearchQuery(query);
 
-  /**
-   * Handle search query from URL on initial page load
-   */
-  useEffect(() => {
-    async function handleInitialLoad() {
-      const query = searchParams.get("q");
-      if (query) {
-        await performSearch(query);
+      try {
+        const searchResults = await CocktailService.instance.search(query);
+
+        setDisplayedResults(searchResults);
+      } catch (error) {
+        setIsSearchError(true);
+
+        if (error instanceof CocktailSearchError) {
+          console.error(error);
+          return;
+        }
+
+        throw error;
+      } finally {
+        setIsFetching(false);
       }
-
-      if (pageResults.length > 0) {
-        setIsInitializing(false);
-      }
-    }
-
-    handleInitialLoad();
-  }, []); // Only run once after mounting
+    },
+    [limit],
+  );
 
   return (
     <Section
@@ -158,7 +133,7 @@ export default function SectionCocktailOverview({
         </Text>
       )}
 
-      {hasNext && displayedResults.length > 0 && !isFetching && !searchQuery && !isInitializing && (
+      {hasNext && displayedResults.length > 0 && !isFetching && !searchQuery && (
         <Button onClick={fetchCocktailPage}>Load more</Button>
       )}
 
